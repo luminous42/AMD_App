@@ -1,7 +1,11 @@
 package np.com.luminoussuwal.babybuy
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -20,7 +24,66 @@ class LoginActivity : AppCompatActivity() {
 
         Log.i(TAG, "onCreate: ")
 
+        binding.btnLogin.setOnClickListener() {
+            val email = binding.tieEmail.text.toString().trim()
+            val password = binding.tiePassword.text.toString().trim()
+            if (email.isNullOrEmpty()) {
+                Toast.makeText(
+                    this@LoginActivity,
+                    "Please input an Email",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+            } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                Toast.makeText(
+                    this@LoginActivity,
+                    "Please enter a valid Email Address",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+            } else if (password.isNullOrEmpty()) {
+                Toast.makeText(
+                    this@LoginActivity,
+                    "Please input a password",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+            } else if (password.matches(Regex("^[0-9]{6}$"))) {
+                Toast.makeText(
+                    this@LoginActivity,
+                    "Password should be atleast be 6 digits",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+            } else {
+                //local field validation success
+                //TODO remote server or local db authentication
 
+
+                //Storing login session in SharedPreferences
+                val sharedPreferences = this@LoginActivity
+                    .applicationContext.getSharedPreferences(
+                        "login",
+                        Context.MODE_PRIVATE
+                    )
+
+                var sharedPrefEditor = sharedPreferences.edit()
+                sharedPrefEditor.putBoolean("isLoggedIn", true)
+                sharedPrefEditor.apply()
+
+                val testData = DataClass(
+                    variable1 = "Some Test Data",
+                    variable2 = 1
+                )
+                //Navigating to Dashboard Activity
+
+                val intent = Intent(this@LoginActivity, DashboardActivity::class.java)
+                intent.putExtra(AppConstants.KEY_EMAIL, email)
+                intent.putExtra(AppConstants.KEY_TEST_DATA, testData)
+                startActivity(intent)
+                finish()
+            }
+        }
     }
 
     override fun onStart() {

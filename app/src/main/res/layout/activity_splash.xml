@@ -37,6 +37,8 @@
         android:text="Get Everything Your Baby Needs"
         app:layout_constraintTop_toBottomOf="@id/tv_app_name"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        android:textStyle="italic"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
