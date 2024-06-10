@@ -71,7 +71,7 @@ class LoginActivity : AppCompatActivity() {
                 sharedPrefEditor.putBoolean("isLoggedIn", true)
                 sharedPrefEditor.apply()
 
-                val testData = DataClass(
+                val testData = TestData(
                     variable1 = "Some Test Data",
                     variable2 = 1
                 )
