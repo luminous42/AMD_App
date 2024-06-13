@@ -1,11 +1,11 @@
-package np.com.luminoussuwal.babybuy
+package np.com.luminoussuwal.babybuy.Dashboard
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import np.com.luminoussuwal.babybuy.databinding.ActivityDashboardBinding
+import np.com.luminoussuwal.babybuy.R
 
 
 /**

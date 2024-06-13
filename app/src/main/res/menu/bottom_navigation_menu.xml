@@ -2,12 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/home"
-
         android:icon="@drawable/home"
         android:title="Home"/>
     <item
         android:id="@+id/items"
-        android:icon="@drawable/list_1422_svgrepo_com"
+        android:icon="@drawable/list"
+        android:title="Items"
+        />
+    <item
+        android:id="@+id/offers"
+        android:icon="@drawable/icons8_offer_100"
         android:title="Items"
         />
     <item
