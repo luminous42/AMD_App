@@ -5,11 +5,27 @@
     android:layout_height="match_parent"
     tools:context=".Dashboard.HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Welcome to the Baby Buy!"
-        />
+        android:orientation="vertical"
+        android:padding="16dp">
+    <TextView
+        android:id="@+id/tv_Welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome to BabyBuy!"
+        android:textSize="18sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        android:scrollbars="horizontal"/>
+
+    </LinearLayout>
 
 </FrameLayout>
