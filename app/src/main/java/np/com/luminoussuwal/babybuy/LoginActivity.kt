@@ -3,16 +3,24 @@ package np.com.luminoussuwal.babybuy
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.util.Patterns
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputEditText
 import np.com.luminoussuwal.babybuy.Dashboard.DashboardActivity
 import np.com.luminoussuwal.babybuy.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
     private val TAG = "LoginActivity"
     private lateinit var binding : ActivityLoginBinding
+    private var isPasswordVisible = false
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -69,6 +77,8 @@ class LoginActivity : AppCompatActivity() {
                 sharedPrefEditor.putBoolean("isLoggedIn", true)
                 sharedPrefEditor.apply()
 
+                Snackbar.make(view, "Login Successful!", Snackbar.LENGTH_SHORT).show()
+
                 val testData = TestData(
                     variable1 = "Some Test Data",
                     variable2 = 1
@@ -82,6 +92,33 @@ class LoginActivity : AppCompatActivity() {
                 finish()
             }
         }
+
+        binding.tvSignup.setOnClickListener {
+            binding.tvSignup.isEnabled = false
+            val intent = Intent(this@LoginActivity, SignUpActivity::class.java)
+            //intent.putExtra(AppConstants.KEY_EMAIL, email)
+            //intent.putExtra(AppConstants.KEY_TEST_DATA, testData)
+            startActivity(intent)
+            finish()
+        }
+
+        binding.ivShowHidePassword.setOnClickListener {
+            isPasswordVisible = !isPasswordVisible
+            togglePasswordVisibility(binding.tiePassword, binding.ivShowHidePassword, isPasswordVisible)
+        }
+
+    }
+
+    private fun togglePasswordVisibility(editText: TextInputEditText, imageView: ImageView, isVisible: Boolean) {
+        if (isVisible) {
+            editText.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            imageView.setImageResource(R.drawable.ic_hide_password) // Change to hide password icon
+        } else {
+            editText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            imageView.setImageResource(R.drawable.ic_show_password) // Change to show password icon
+        }
+        // Move the cursor to the end
+        editText.setSelection(editText.text?.length ?: 0)
     }
 
     override fun onStart() {
@@ -92,6 +129,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         Log.i(TAG, "onResume: ")
+        binding.tvSignup.isEnabled = true
     }
 
     override fun onPause() {

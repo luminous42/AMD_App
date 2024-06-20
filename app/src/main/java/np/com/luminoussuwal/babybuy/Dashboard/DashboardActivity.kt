@@ -9,6 +9,8 @@ import np.com.luminoussuwal.babybuy.databinding.ActivityDashboardBinding
 class DashboardActivity :AppCompatActivity(){
     private lateinit var binding: ActivityDashboardBinding
 
+    private val fragmentManager = supportFragmentManager
+
     private val homeFragment = HomeFragment()
     private val itemFragment = ItemFragment()
     private val offerFragment = OfferFragment()
@@ -39,39 +41,49 @@ class DashboardActivity :AppCompatActivity(){
 //        ).show()
 
       //  loadFragment(homeFragment)
+        loadRespectiveFragment(homeFragment)
 
         binding.bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.home -> {
-                    loadFragment(homeFragment)
+                    loadRespectiveFragment(homeFragment)
                     true
                 }
                 R.id.items -> {
-                    loadFragment(itemFragment)
+                    loadRespectiveFragment(itemFragment)
                     true
                 }
                 R.id.offers -> {
-                    loadFragment(offerFragment)
+                    loadRespectiveFragment(offerFragment)
                     true
                 }
                 R.id.profile -> {
-                    loadFragment(profileFragment)
+                    loadRespectiveFragment(profileFragment)
                     true
                 }
                 else -> false
             }
         }
 
-        // Load the default fragment
-        if (savedInstanceState == null) {
-            binding.bottomNavigation.selectedItemId = R.id.home
-        }
+
     }
 
-    private fun loadFragment(fragment: Fragment) {
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.home_fragment, fragment)
+//    private fun loadFragment(fragment: Fragment) {
+//        supportFragmentManager
+//            .beginTransaction()
+//            .replace(R.id.home_fragment, fragment)
+//            .commit()
+//    }
+
+    private fun loadRespectiveFragment(fragment: Fragment) {
+        fragmentManager.beginTransaction()
+            .replace(
+                binding.fragmentContainerView.id,
+                fragment,
+                null
+            )
+            .setReorderingAllowed(true)
+            .addToBackStack(null)
             .commit()
     }
 }
