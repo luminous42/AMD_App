@@ -3,7 +3,7 @@ package np.com.luminoussuwal.babybuy.Dashboard.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import np.com.luminoussuwal.babybuy.Dashboard.Product
+import np.com.luminoussuwal.babybuy.Dashboard.db.Product
 import np.com.luminoussuwal.babybuy.databinding.LayoutItemOffersBinding
 
 class OffersHorizontalAdapter(val products: List<Product>)

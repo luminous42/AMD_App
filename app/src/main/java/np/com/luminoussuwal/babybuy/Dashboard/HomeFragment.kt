@@ -1,16 +1,15 @@
 package np.com.luminoussuwal.babybuy.Dashboard
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import np.com.luminoussuwal.babybuy.Dashboard.adapters.OffersHorizontalAdapter
-import np.com.luminoussuwal.babybuy.ItemAdapter
-import np.com.luminoussuwal.babybuy.R
+import np.com.luminoussuwal.babybuy.Dashboard.db.Product
 import np.com.luminoussuwal.babybuy.databinding.FragmentHomeBinding
 
 
@@ -70,5 +69,15 @@ class HomeFragment : Fragment() {
             products.add(product)
         }
         return products
+    }
+
+    private fun setUpFabButton(){
+        binding.fabAddItem.setOnClickListener{
+            val intent = Intent(
+                requireActivity(),
+                AddOrUpdateActivity::class.java
+            )
+            startActivity(intent)
+        }
     }
 }
