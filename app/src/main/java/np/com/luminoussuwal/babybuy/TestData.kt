@@ -6,5 +6,6 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class TestData(
     val variable1: String,
-    val variable2: Int
+    val variable2: Int,
+    val User: String
 ): Parcelable

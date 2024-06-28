@@ -20,7 +20,7 @@ class AddOrUpdateActivity : AppCompatActivity() {
         binding =  ActivityAddOrUpdateBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.mbAddOrUpdate.setOnClickListener {
+        binding.btnAddOrUpdate.setOnClickListener {
             val db = MainDatabase.getInstance(this.applicationContext)
             val dao = db.getProductDao()
 

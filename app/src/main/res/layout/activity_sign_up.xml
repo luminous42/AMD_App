@@ -88,6 +88,7 @@
         app:boxCornerRadiusTopEnd="30dp"
         app:boxCornerRadiusTopStart="30dp"
         app:layout_constraintTop_toBottomOf="@+id/til_password"
+        app:endIconMode="password_toggle"
         >
         <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/tie_confirm_password"

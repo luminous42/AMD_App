@@ -14,6 +14,8 @@ import androidx.room.RoomDatabase
 abstract class MainDatabase: RoomDatabase() {
     abstract fun getProductDao(): ProductDAO
 
+    abstract fun getUserDao(): UserDAO
+
     companion object{
         private var INSTANCE: MainDatabase? = null
 

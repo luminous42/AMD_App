@@ -2,25 +2,41 @@ package np.com.luminoussuwal.babybuy
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.util.Patterns
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.Firebase
+import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 import np.com.luminoussuwal.babybuy.databinding.ActivityLoginBinding
 import np.com.luminoussuwal.babybuy.databinding.ActivitySignUpBinding
 
 class SignUpActivity : AppCompatActivity() {
     private val TAG = "SignUpActivity"
+    private lateinit var auth: FirebaseAuth
+
     private lateinit var binding: ActivitySignUpBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
+
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+
+
+         auth = FirebaseAuth.getInstance()
 
         Log.i(TAG, "onCreate: ")
 
@@ -63,6 +79,30 @@ class SignUpActivity : AppCompatActivity() {
                 //local field validation success
                 //TODO remote server or local db authentication
 
+                auth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful){
+                            val user = auth.currentUser
+
+                            val rootView = findViewById<View>(android.R.id.content) // Get the root view of your layout
+                            Snackbar.make(rootView, "Sign Up Successful!", Snackbar.LENGTH_SHORT).show()
+
+                            //Navigating to Login Activity
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            }, 1000)
+                        }
+                        else{
+                            Toast.makeText(
+                                this@SignUpActivity,
+                                "Sign Up failed",
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                        }                        }
+
                 //Storing signup session in SharedPreferences
 //                val sharedPreferences = this@SignUpActivity
 //                    .applicationContext.getSharedPreferences(
@@ -74,10 +114,7 @@ class SignUpActivity : AppCompatActivity() {
 //                sharedPrefEditor.putBoolean("isSignedUp", true)
 //                sharedPrefEditor.apply()
 
-                //Navigating to Login Activity
-                val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
-                startActivity(intent)
-                finish()
+
             }
 
         }

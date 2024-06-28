@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "452641037243",
+    "project_id": "android-9e65d",
+    "storage_bucket": "android-9e65d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:452641037243:android:8b845bc8ad0d55c827429e",
+        "android_client_info": {
+          "package_name": "np.com.luminoussuwal.babybuy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsmBGqTYCY9oH9POhBEAyk8qMhRXtlz6U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

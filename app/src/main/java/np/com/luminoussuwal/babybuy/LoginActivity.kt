@@ -11,6 +11,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.Firebase
+import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.auth
 import np.com.luminoussuwal.babybuy.Dashboard.DashboardActivity
 import np.com.luminoussuwal.babybuy.databinding.ActivityLoginBinding
 
@@ -27,6 +30,9 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        FirebaseApp.initializeApp(this)
+        val auth = Firebase.auth
 
         Log.i(TAG, "onCreate: ")
 
@@ -62,37 +68,58 @@ class LoginActivity : AppCompatActivity() {
                 )
                     .show()
             } else {
+
+                var testData: TestData
+
+
                 //local field validation success
                 //TODO remote server or local db authentication
+                auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            val user = auth.currentUser
+                            testData = TestData("Hello", 123, user.toString())
 
 
-                //Storing login session in SharedPreferences
-                val sharedPreferences = this@LoginActivity
-                    .applicationContext.getSharedPreferences(
-                        "login",
-                        Context.MODE_PRIVATE
-                    )
+                            //Storing login session in SharedPreferences
+                            val sharedPreferences = this@LoginActivity
+                                .applicationContext.getSharedPreferences(
+                                    "login",
+                                    Context.MODE_PRIVATE
+                                )
 
-                var sharedPrefEditor = sharedPreferences.edit()
-                sharedPrefEditor.putBoolean("isLoggedIn", true)
-                sharedPrefEditor.apply()
+                            var sharedPrefEditor = sharedPreferences.edit()
+                            sharedPrefEditor.putBoolean("isLoggedIn", true)
+                            sharedPrefEditor.apply()
 
-                Snackbar.make(view, "Login Successful!", Snackbar.LENGTH_SHORT).show()
+                            Snackbar.make(
+                                view, "Login Successful!",
+                                Snackbar.LENGTH_SHORT
+                            ).show()
 
-                val testData = TestData(
-                    variable1 = "Some Test Data",
-                    variable2 = 1
-                )
-                //Navigating to Dashboard Activity
 
-                val intent = Intent(this@LoginActivity, DashboardActivity::class.java)
-                intent.putExtra(AppConstants.KEY_EMAIL, email)
-                intent.putExtra(AppConstants.KEY_TEST_DATA, testData)
-                startActivity(intent)
-                finish()
+                            //Navigating to Dashboard Activity
+
+                            val intent = Intent(
+                                this@LoginActivity,
+                                DashboardActivity::class.java
+                            )
+                            intent.putExtra(AppConstants.KEY_EMAIL, email)
+                            intent.putExtra(AppConstants.KEY_TEST_DATA, testData)
+                            startActivity(intent)
+                            finish()
+
+                        } else {
+                            Toast.makeText(
+                                this@LoginActivity,
+                                "Authentication failed",
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                        }
+                    }
             }
         }
-
         binding.tvSignup.setOnClickListener {
             binding.tvSignup.isEnabled = false
             val intent = Intent(this@LoginActivity, SignUpActivity::class.java)
@@ -102,24 +129,26 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
-        binding.ivShowHidePassword.setOnClickListener {
-            isPasswordVisible = !isPasswordVisible
-            togglePasswordVisibility(binding.tiePassword, binding.ivShowHidePassword, isPasswordVisible)
-        }
-
+//        binding.ivShowHidePassword.setOnClickListener {
+//            isPasswordVisible = !isPasswordVisible
+//            togglePasswordVisibility(
+//                binding.tiePassword,
+//                binding.ivShowHidePassword,
+//                isPasswordVisible
+//            )
+//        }
     }
-
-    private fun togglePasswordVisibility(editText: TextInputEditText, imageView: ImageView, isVisible: Boolean) {
-        if (isVisible) {
-            editText.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-            imageView.setImageResource(R.drawable.ic_hide_password) // Change to hide password icon
-        } else {
-            editText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-            imageView.setImageResource(R.drawable.ic_show_password) // Change to show password icon
-        }
-        // Move the cursor to the end
-        editText.setSelection(editText.text?.length ?: 0)
-    }
+//    private fun togglePasswordVisibility(editText: TextInputEditText, imageView: ImageView, isVisible: Boolean) {
+//        if (isVisible) {
+//            editText.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+//            imageView.setImageResource(R.drawable.ic_hide_password) // Change to hide password icon
+//        } else {
+//            editText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+//            imageView.setImageResource(R.drawable.ic_show_password) // Change to show password icon
+//        }
+//        // Move the cursor to the end
+//        editText.setSelection(editText.text?.length ?: 0)
+//    }
 
     override fun onStart() {
         super.onStart()
