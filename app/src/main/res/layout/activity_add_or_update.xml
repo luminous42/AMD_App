@@ -19,6 +19,16 @@
 <!--        app:cornerRadius="0dp"-->
 <!--        app:rippleColor="@android:color/holo_red_light"-->
 <!--        tools:text="Add"/>-->
+    <ImageView
+        android:id="@+id/ivAddImage"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@mipmap/img_holder"
+        android:contentDescription="add_image"
+        app:layout_constraintBottom_toTopOf="@id/til_item_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginRight="32dp"/>
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_item_name"
         android:layout_width="match_parent"
@@ -75,7 +85,9 @@
         android:layout_height="wrap_content"
         android:hint="Description"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxStrokeColor="#394867"
 
+        app:boxStrokeWidth="3dp"
         app:boxCornerRadiusTopEnd="30dp"
         app:boxCornerRadiusBottomEnd="30dp"
         app:boxCornerRadiusTopStart="30dp"
@@ -100,7 +112,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_marginBottom="32dp"
-        android:backgroundTint="#d2e3c8"
+        android:backgroundTint="#e4f1ff"
         tools:text="Add"
         android:paddingHorizontal="60dp"
         android:paddingVertical="10dp"

@@ -10,25 +10,45 @@
 
     <ImageView
         android:id="@+id/iv_logo"
-        android:layout_width="265dp"
-        android:layout_height="239dp"
+        android:layout_width="173dp"
+        android:layout_height="148dp"
         android:src="@mipmap/ic_launcher"
 
         app:layout_constraintBottom_toTopOf="@+id/tv_greeting"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tv_greeting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Welcome to Baby Buy"
-        app:layout_constraintBottom_toTopOf="@+id/til_email"
+        app:layout_constraintTop_toBottomOf="@+id/iv_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:textStyle="bold"
         android:textSize="28dp"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_Username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Username"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+   app:layout_constraintTop_toBottomOf="@+id/tv_greeting"
+        app:boxCornerRadiusTopEnd="30dp"
+        app:boxCornerRadiusBottomEnd="30dp"
+        app:boxCornerRadiusTopStart="30dp"
+        app:boxCornerRadiusBottomStart="30dp"
+        android:paddingTop="32dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tie_Username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_email"
@@ -36,13 +56,12 @@
         android:layout_height="wrap_content"
         android:hint="Email"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/til_Username"
         app:boxCornerRadiusTopEnd="30dp"
         app:boxCornerRadiusBottomEnd="30dp"
         app:boxCornerRadiusTopStart="30dp"
         app:boxCornerRadiusBottomStart="30dp"
-        android:paddingTop="32dp">
+        android:paddingTop="16dp">
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/tie_email"

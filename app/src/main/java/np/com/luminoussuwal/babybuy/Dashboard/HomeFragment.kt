@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import np.com.luminoussuwal.babybuy.Dashboard.adapters.OffersHorizontalAdapter
 import np.com.luminoussuwal.babybuy.Dashboard.db.Product
+import np.com.luminoussuwal.babybuy.R
 import np.com.luminoussuwal.babybuy.databinding.FragmentHomeBinding
 
 
@@ -31,7 +32,17 @@ class HomeFragment : Fragment() {
             false
         )
 
+        binding.ibItems.setOnClickListener {
+            (activity as? DashboardActivity)?.loadRespectiveFragment(ItemFragment())
+                }
+
+        binding.ibOffers.setOnClickListener {
+            (activity as? DashboardActivity)?.loadRespectiveFragment(OfferFragment())
+        }
+
         setUpOffersRecyclerView()
+
+        setUpFabButton()
         return binding.root
     }
 

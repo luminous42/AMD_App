@@ -75,16 +75,28 @@ class DashboardActivity :AppCompatActivity(){
 //            .commit()
 //    }
 
-    private fun loadRespectiveFragment(fragment: Fragment) {
-        fragmentManager.beginTransaction()
-            .replace(
-                binding.fragmentContainerView.id,
-                fragment,
-                null
-            )
+    public fun loadRespectiveFragment(fragment: Fragment) {
+        val transaction = fragmentManager.beginTransaction().replace(
+            binding.fragmentContainerView.id,
+            fragment,
+            null
+        )
             .setReorderingAllowed(true)
             .addToBackStack(null)
-            .commit()
+
+        // Update BottomNavigationView selection based on the fragment
+        when (fragment) {
+            is HomeFragment -> binding.bottomNavigation.
+            selectedItemId = R.id.home
+            is ItemFragment -> binding.bottomNavigation.
+            selectedItemId = R.id.items
+            is OfferFragment -> binding.bottomNavigation.
+            selectedItemId = R.id.offers
+            is ProfileFragment -> binding.bottomNavigation.
+            selectedItemId = R.id.profile
+        }
+
+        transaction.commit()
     }
 }
 

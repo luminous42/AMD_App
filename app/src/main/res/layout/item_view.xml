@@ -7,7 +7,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/baby_bottle_background"
+        android:src="@mipmap/baby_bottle"
         android:backgroundTint="@android:color/transparent"/>
 
     <TextView
