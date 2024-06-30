@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import np.com.luminoussuwal.babybuy.LoginActivity
 import np.com.luminoussuwal.babybuy.R
@@ -56,6 +57,11 @@ class ProfileFragment : Fragment() {
             val intent = Intent(requireContext(), LoginActivity::class.java)
             startActivity(intent)
             requireActivity().finish()
+        }
+
+        (activity as? AppCompatActivity)?.supportActionBar?.apply {
+            title = "My Profile"
+            setDisplayHomeAsUpEnabled(true) // Enable the back button
         }
 
         return view

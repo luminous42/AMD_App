@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/itemFragment">
+
+    <activity
+        android:id="@+id/addOrUpdateActivity"
+        android:name="np.com.luminoussuwal.babybuy.Dashboard.AddOrUpdateActivity"
+        android:label="activity_add_or_update"
+        tools:layout="@layout/activity_add_or_update" />
+    <fragment
+        android:id="@+id/itemFragment"
+        android:name="np.com.luminoussuwal.babybuy.Dashboard.ItemFragment"
+        android:label="fragment_item"
+        tools:layout="@layout/fragment_item" />
+</navigation>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -7,7 +8,15 @@
     android:layout_height="match_parent"
     tools:context=".Dashboard.AddOrUpdateActivity">
 
-<!--    <com.google.android.material.button.MaterialButton-->
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <!--    <com.google.android.material.button.MaterialButton-->
 <!--        android:id="@+id/mb_add_or_update"-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="wrap_content"-->
@@ -21,22 +30,24 @@
 <!--        tools:text="Add"/>-->
     <ImageView
         android:id="@+id/ivAddImage"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:src="@mipmap/img_holder"
         android:contentDescription="add_image"
-        app:layout_constraintBottom_toTopOf="@id/til_item_name"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginRight="32dp"/>
+        app:layout_constraintTop_toTopOf="@id/til_item_name"
+        app:layout_constraintStart_toEndOf="@id/til_item_name"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="32dp"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_item_name"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:hint="Name"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
         app:boxCornerRadiusTopEnd="30dp"
         app:boxCornerRadiusBottomEnd="30dp"
         app:boxCornerRadiusTopStart="30dp"
@@ -50,17 +61,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
+
             />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_item_price"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:hint="Price"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
         app:boxCornerRadiusTopEnd="30dp"
         app:boxCornerRadiusBottomEnd="30dp"
         app:boxCornerRadiusTopStart="30dp"
@@ -74,25 +86,29 @@
             android:id="@+id/tie_item_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
+            android:inputType="numberDecimal"
+
             />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_item_description"
-        android:layout_width="match_parent"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:hint="Description"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:boxStrokeColor="#394867"
 
-        app:boxStrokeWidth="3dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+
+        app:boxStrokeColor="#394867"
+        app:boxStrokeWidth="2dp"
+
         app:boxCornerRadiusTopEnd="30dp"
         app:boxCornerRadiusBottomEnd="30dp"
         app:boxCornerRadiusTopStart="30dp"
         app:boxCornerRadiusBottomStart="30dp"
         android:paddingTop="15dp"
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
         app:layout_constraintTop_toBottomOf="@id/til_item_price">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -101,9 +117,20 @@
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
 
+
             />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/map_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="16dp"
+        app:layout_constraintTop_toBottomOf="@id/til_item_description"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 
     <Button
         android:id="@+id/btn_add_or_update"
@@ -113,12 +140,12 @@
         android:layout_marginTop="32dp"
         android:layout_marginBottom="32dp"
         android:backgroundTint="#e4f1ff"
-        tools:text="Add"
+        android:text="Add"
         android:paddingHorizontal="60dp"
         android:paddingVertical="10dp"
         app:cornerRadius="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/map_fragment_container"  />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package np.com.luminoussuwal.babybuy
 
+import CloudDrawable
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -30,6 +31,8 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        view.background = CloudDrawable()
 
         FirebaseApp.initializeApp(this)
         val auth = Firebase.auth
@@ -112,7 +115,7 @@ class LoginActivity : AppCompatActivity() {
                         } else {
                             Toast.makeText(
                                 this@LoginActivity,
-                                "Authentication failed",
+                                "P",
                                 Toast.LENGTH_SHORT
                             ).show()
 

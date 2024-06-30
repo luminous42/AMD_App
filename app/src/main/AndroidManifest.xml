@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -17,18 +20,20 @@
             android:exported="false" />
         <activity
             android:name=".SignUpActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.BabyBuy.Login"/>
         <activity
             android:name=".Dashboard.DashboardActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            />
         <activity
             android:name=".LoginActivity"
             android:exported="false"
             android:theme="@style/Theme.BabyBuy.Login" />
         <activity
             android:name=".SplashActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.BabyBuy.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,6 +44,12 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDxn7kIBwJOYXBf34Z3_dhfjJ8IBCVjGgY" />
+
+
     </application>
 
 </manifest>

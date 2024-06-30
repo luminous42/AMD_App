@@ -14,6 +14,9 @@ lifecycleViewmodelKtx = "2.7.0"
 activity = "1.9.0"
 googleGmsGoogleServices = "4.4.2"
 firebaseAuth = "23.0.0"
+playServicesMaps = "19.0.0"
+playServicesLocation = "21.3.0"
+navigationFragmentKtx = "2.7.7"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -28,6 +31,9 @@ androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecy
 androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
+play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
+androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -1,8 +1,10 @@
 package np.com.luminoussuwal.babybuy.Dashboard
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import np.com.luminoussuwal.babybuy.R
 import np.com.luminoussuwal.babybuy.databinding.ActivityDashboardBinding
 
@@ -17,10 +19,19 @@ class DashboardActivity :AppCompatActivity(){
     private val profileFragment = ProfileFragment()
 
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDashboardBinding.inflate(layoutInflater)
+
+
+
         setContentView(binding.root)
+
+        val actionBar = supportActionBar
+        actionBar?.title = "Dashboard"
+
 
 //        val receivedEmail = intent.getStringExtra(AppConstants.KEY_EMAIL)
 //
@@ -41,7 +52,13 @@ class DashboardActivity :AppCompatActivity(){
 //        ).show()
 
       //  loadFragment(homeFragment)
+
+//        val navController = findNavController(homeFragment) // Get NavController
+//        binding.bottomNavigation.
+//        setupWithNavController(navController)
+
         loadRespectiveFragment(homeFragment)
+
 
         binding.bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -76,27 +93,22 @@ class DashboardActivity :AppCompatActivity(){
 //    }
 
     public fun loadRespectiveFragment(fragment: Fragment) {
-        val transaction = fragmentManager.beginTransaction().replace(
-            binding.fragmentContainerView.id,
-            fragment,
-            null
-        )
-            .setReorderingAllowed(true)
+        val fragmentManager = supportFragmentManager
+        fragmentManager
+            .beginTransaction()
+            .replace(binding.fragmentContainerView.id, fragment)
             .addToBackStack(null)
+            .commit()
+    }
 
-        // Update BottomNavigationView selection based on the fragment
-        when (fragment) {
-            is HomeFragment -> binding.bottomNavigation.
-            selectedItemId = R.id.home
-            is ItemFragment -> binding.bottomNavigation.
-            selectedItemId = R.id.items
-            is OfferFragment -> binding.bottomNavigation.
-            selectedItemId = R.id.offers
-            is ProfileFragment -> binding.bottomNavigation.
-            selectedItemId = R.id.profile
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressedDispatcher.onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
-
-        transaction.commit()
     }
 }
 

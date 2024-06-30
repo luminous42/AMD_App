@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import np.com.luminoussuwal.babybuy.Dashboard.adapters.OffersHorizontalAdapter
@@ -43,6 +44,13 @@ class HomeFragment : Fragment() {
         setUpOffersRecyclerView()
 
         setUpFabButton()
+
+
+        (activity as? AppCompatActivity)?.supportActionBar?.apply {
+            title = "Home"
+            setDisplayHomeAsUpEnabled(false) // Disable the back button
+        }
+
         return binding.root
     }
 

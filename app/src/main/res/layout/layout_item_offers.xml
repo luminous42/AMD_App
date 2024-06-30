@@ -26,27 +26,28 @@
             android:id="@+id/tv_item_offers_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Item Name"
+            android:text="Item Name"
             android:gravity="center"
             android:textStyle="bold"
             android:textSize="20sp"
+
             />
         <TextView
             android:id="@+id/tv_category_offers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Category: Utensils"
+            android:text="Category: Utensils"
             android:gravity="center"
             android:textStyle="bold"/>
         <TextView
             android:id="@+id/tv_price_offers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Price: Rs.500"
+            android:text="Price: Rs.500"
             android:gravity="center"
             android:textStyle="bold"/>
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/mb_offers_add_item"
             android:layout_marginTop="16dp"
             android:layout_gravity="center"
@@ -57,7 +58,7 @@
             android:paddingHorizontal="60dp"
             android:paddingVertical="10dp"
             app:cornerRadius="30dp"
-            tools:text="Add"/>
+            android:text="Add"/>
 
 
     </LinearLayout>

@@ -8,9 +8,9 @@ import androidx.room.Query
 @Dao
 interface UserDAO {
 
-    @Insert
-    fun getUser(user: User)
+//    @Insert
+//    fun getUser(user: User)
 
-    @Query("Select * from user where email = :user.email and password = :password" )
-    fun ValidateUser(user: User)
+//    @Query("Select * from user where email = :user.email and password = :password" )
+//    fun validateUser(user: User)
 }
