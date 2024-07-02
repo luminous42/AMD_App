@@ -1,9 +1,12 @@
 package np.com.luminoussuwal.babybuy.Dashboard.db
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity(tableName = "product")
 data class Product(
     @PrimaryKey(autoGenerate = true)
@@ -20,5 +23,6 @@ data class Product(
     @ColumnInfo(name="mark_as_purchased")
     var markAsPurchased: Boolean = false,
     var quantity: String? = null,
-    var delegateTo: String? = null
-)
+    var delegateTo: String? = null,
+    var timeStamp: String? = null
+): Parcelable

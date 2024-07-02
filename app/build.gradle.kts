@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.play.services.maps)
     implementation(libs.play.services.location)
     implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.play.services.cast.framework)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -62,7 +63,25 @@ dependencies {
 
     implementation ("androidx.room:room-runtime:$room_version")
     annotationProcessor ("androidx.room:room-compiler:$room_version")
-    kapt ("androidx.room:room-compiler:$room_version")
+   kapt ("androidx.room:room-compiler:$room_version")
+
+    implementation ("com.github.bumptech.glide:glide:4.15.1") // Use the latest version
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.15.1")
+   // implementation ("com.github.dhaval2404:imagepicker:2.1") // Replace with the latest version
+
+    //for location
+    implementation(libs.location)
+
+    //for google maps
+    implementation(libs.googleMaps)
+
+    //for cameraX
+    implementation(libs.cameraXCore)
+    implementation(libs.camera2)
+    implementation(libs.cameraLifeCycle)
+    implementation(libs.cameraVideo)
+    implementation(libs.cameraView)
+    implementation(libs.cameraExtensions)
 
 
     // To use Kotlin annotation processing tool (kapt)

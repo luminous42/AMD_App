@@ -17,4 +17,12 @@
     <string name="profile_image">Default Image</string>
     <string name="logout">Log Out</string>
 
+    <string-array name="product_categories">
+        <item>Clothes</item>
+        <item>Food</item>
+        <item>Toys</item>
+        <item>Hygiene</item>
+        <item>Skin</item>
+    </string-array>
+
 </resources>

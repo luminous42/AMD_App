@@ -10,10 +10,7 @@ class OffersHorizontalAdapter(val products: List<Product>)
     : RecyclerView.Adapter<OffersHorizontalAdapter.ViewHolder>(){
 
     class ViewHolder(val binding: LayoutItemOffersBinding
-    ): RecyclerView.ViewHolder(binding.root){
-
-
-    }
+    ): RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

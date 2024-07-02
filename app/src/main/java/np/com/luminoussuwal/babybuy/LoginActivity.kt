@@ -4,14 +4,12 @@ import CloudDrawable
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.InputType
 import android.util.Log
 import android.util.Patterns
-import android.widget.ImageView
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.auth
@@ -39,7 +37,11 @@ class LoginActivity : AppCompatActivity() {
 
         Log.i(TAG, "onCreate: ")
 
-        binding.btnLogin.setOnClickListener() {
+        binding.btnLogin.setOnClickListener {
+            binding.btnLogin.isEnabled = false
+            binding.btnLogin.text = ""
+            binding.progressBar.visibility = View.VISIBLE
+
             val email = binding.tieEmail.text.toString().trim()
             val password = binding.tiePassword.text.toString().trim()
             if (email.isNullOrEmpty()) {
@@ -49,6 +51,12 @@ class LoginActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 )
                     .show()
+
+                binding.progressBar.visibility = View.GONE
+                binding.btnLogin.isEnabled = true
+                binding.btnLogin.text = "Log In"
+                return@setOnClickListener
+
             } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 Toast.makeText(
                     this@LoginActivity,
@@ -56,6 +64,12 @@ class LoginActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 )
                     .show()
+
+                binding.progressBar.visibility = View.GONE
+                binding.btnLogin.isEnabled = true
+                binding.btnLogin.text = "Log In"
+                return@setOnClickListener
+
             } else if (password.isNullOrEmpty()) {
                 Toast.makeText(
                     this@LoginActivity,
@@ -63,6 +77,12 @@ class LoginActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 )
                     .show()
+
+                binding.progressBar.visibility = View.GONE
+                binding.btnLogin.isEnabled = true
+                binding.btnLogin.text = "Log In"
+                return@setOnClickListener
+
             } else if (password.matches(Regex("^[0-9]{6}$"))) {
                 Toast.makeText(
                     this@LoginActivity,
@@ -70,6 +90,12 @@ class LoginActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 )
                     .show()
+
+                binding.progressBar.visibility = View.GONE
+                binding.btnLogin.isEnabled = true
+                binding.btnLogin.text = "Log In"
+                return@setOnClickListener
+
             } else {
 
                 var testData: TestData
@@ -95,13 +121,16 @@ class LoginActivity : AppCompatActivity() {
                             sharedPrefEditor.putBoolean("isLoggedIn", true)
                             sharedPrefEditor.apply()
 
+                            binding.progressBar.visibility = View.GONE
+                            binding.btnLogin.isEnabled = true
+
                             Snackbar.make(
                                 view, "Login Successful!",
                                 Snackbar.LENGTH_SHORT
                             ).show()
 
-
-                            //Navigating to Dashboard Activity
+//                            Handler(Looper.getMainLooper()).postDelayed({
+//                            //Navigating to Dashboard Activity
 
                             val intent = Intent(
                                 this@LoginActivity,
@@ -112,11 +141,17 @@ class LoginActivity : AppCompatActivity() {
                             startActivity(intent)
                             finish()
 
+//                            }, 600)
+
                         } else {
-                            Toast.makeText(
-                                this@LoginActivity,
-                                "P",
-                                Toast.LENGTH_SHORT
+                            binding.progressBar.visibility = View.GONE
+                            binding.btnLogin.isEnabled = true
+                            binding.btnLogin.text = "Log In"
+
+                            Snackbar.make(
+                                view,
+                                "Invalid Email or Password",
+                                Snackbar.LENGTH_SHORT
                             ).show()
 
                         }

@@ -13,15 +13,11 @@ import np.com.luminoussuwal.babybuy.databinding.FragmentOfferBinding
 class OfferFragment : Fragment() {
 
     private lateinit var binding: FragmentOfferBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentOfferBinding.inflate(
             layoutInflater,

@@ -69,4 +69,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        app:layout_constraintEnd_toEndOf="@+id/ivProfileImage"
+        app:layout_constraintBottom_toBottomOf="@+id/ivProfileImage"
+        android:id="@+id/fab"
+        android:src="@android:drawable/ic_menu_camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

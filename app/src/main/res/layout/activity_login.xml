@@ -82,27 +82,44 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/btn_login"
-        android:textColor="@color/black"
+    <FrameLayout
+        android:id="@+id/fl_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:backgroundTint="#d2e3c8"
-        android:text="Log In"
-        android:paddingHorizontal="60dp"
-        android:paddingVertical="10dp"
-        app:cornerRadius="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/til_password" />
+        app:layout_constraintTop_toBottomOf="@id/til_password">
+
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:backgroundTint="#d2e3c8"
+            android:paddingHorizontal="50dp"
+            android:paddingVertical="10dp"
+            android:text="Log In"
+            android:textColor="@color/black"
+            app:cornerRadius="30dp" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:indeterminateTint="@color/black"
+            android:layout_gravity="center"
+            android:layout_marginTop = "16dp"
+            android:visibility="gone" />
+    </FrameLayout>
+
 
     <TextView
         android:id="@+id/tv_forgotpassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Forgot Password?"
-        app:layout_constraintTop_toBottomOf="@id/btn_login"
+        app:layout_constraintTop_toBottomOf="@id/fl_login"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -116,5 +133,6 @@
         android:layout_marginTop="18dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

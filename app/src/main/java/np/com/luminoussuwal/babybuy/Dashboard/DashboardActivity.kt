@@ -92,7 +92,7 @@ class DashboardActivity :AppCompatActivity(){
 //            .commit()
 //    }
 
-    public fun loadRespectiveFragment(fragment: Fragment) {
+    fun loadRespectiveFragment(fragment: Fragment) {
         val fragmentManager = supportFragmentManager
         fragmentManager
             .beginTransaction()
