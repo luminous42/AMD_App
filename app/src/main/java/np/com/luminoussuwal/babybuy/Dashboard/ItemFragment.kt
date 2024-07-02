@@ -26,7 +26,10 @@ import np.com.luminoussuwal.babybuy.utility.UiUtility
         private lateinit var startAddOrUpdateActivityForResult: ActivityResultLauncher<Intent>
         private lateinit var startDetailViewActivity: ActivityResultLauncher<Intent>
         private lateinit var adapter: ItemAdapter
-
+        private val productList = mutableListOf<Product>()
+        companion object {
+            const val ADD_UPDATE_REQUEST_CODE = 1001
+        }
 
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
@@ -79,7 +82,8 @@ import np.com.luminoussuwal.babybuy.utility.UiUtility
                     requireActivity(),
                     AddOrUpdateActivity::class.java
                 )
-                startActivity(intent)
+                startActivityForResult(intent, ADD_UPDATE_REQUEST_CODE)
+
             }
         }
 
@@ -147,5 +151,15 @@ import np.com.luminoussuwal.babybuy.utility.UiUtility
 //        }
 //        return products
 //    }
+private fun refreshData() {
+    setUpRecyclerView()//, e.g., re-fetch from the database or API
+    // Notify adapter about data changes
+}
+
+        override fun onResume() {
+            super.onResume()
+            refreshData()
+        }
+
 
     }

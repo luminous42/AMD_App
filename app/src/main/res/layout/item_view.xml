@@ -6,13 +6,14 @@
     app:cardBackgroundColor="#FFFFFF"
     app:cardCornerRadius="8dp"
     android:layout_margin="6dp"
+
     app:cardElevation="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/item_root_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:padding="8dp">
 
         <ImageView
             android:id="@+id/iv_item"
@@ -93,7 +94,7 @@
         <LinearLayout
             android:id="@+id/button_container"
             android:layout_width="0dp"
-            app:layout_constraintWidth_percent="0.6"
+            app:layout_constraintWidth_percent="0.5"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="16dp"

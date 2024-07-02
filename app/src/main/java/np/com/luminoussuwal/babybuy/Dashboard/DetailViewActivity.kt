@@ -14,6 +14,7 @@ import android.telephony.SmsManager
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -66,6 +67,8 @@ class DetailViewActivity : AppCompatActivity() {
             title = "Product Details"
             setDisplayHomeAsUpEnabled(true) // Enable the back button
         }
+
+        setUpMarkAsPurchasedCheckbox()
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater: MenuInflater = menuInflater
@@ -154,12 +157,12 @@ class DetailViewActivity : AppCompatActivity() {
             exception.printStackTrace()
         }
 
-//        if (intent.getBooleanExtra(AppConstants.KEY_IS_SUGGESTION, false)) {
-//            detailViewBinding.ibEdit.visibility = View.GONE
-//            detailViewBinding.ibShare.visibility = View.GONE
-//            detailViewBinding.ibDelete.visibility = View.GONE
-//            detailViewBinding.cbPurchased.visibility = View.GONE
-//        }
+        if (intent.getBooleanExtra(AppConstants.KEY_IS_SUGGESTION, false)) {
+         //   detailViewBinding.ibEdit.visibility = View.GONE
+          //  detailViewBinding.ibShare.visibility = View.GONE
+          //  detailViewBinding.ibDelete.visibility = View.GONE
+            detailViewBinding.cbPurchased.visibility = View.GONE
+        }
     }
 
     private fun setUpButtons() {

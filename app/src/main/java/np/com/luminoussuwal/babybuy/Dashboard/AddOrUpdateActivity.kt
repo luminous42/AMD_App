@@ -70,19 +70,7 @@ class AddOrUpdateActivity : AppCompatActivity(), MyMapFragment.OnLocationSelecte
 
         updateContentIfProductReceived()
 
-//        val spinnerCategory: Spinner = binding.spinnerCategory
-//
-//        // Predefined options
-//        val categories = listOf("Food", "Clothes", "Medicine", "BabyCare")
-//
-//        // Create an ArrayAdapter using the string array and a default spinner layout
-//        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categories)
-//
-//        // Specify the layout to use when the list of choices appears
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//
-//        // Apply the adapter to the spinner
-//        spinnerCategory.adapter = adapter
+
 
         val mapFragment = MyMapFragment()
         supportFragmentManager.beginTransaction()
@@ -99,9 +87,6 @@ class AddOrUpdateActivity : AppCompatActivity(), MyMapFragment.OnLocationSelecte
             }
 
 
-//        binding.mbProductLocation.setOnClickListener {
-//            startMapActivity()
-//        }
 
         binding.ivAddImage.setOnClickListener {
             handleImageAddButtonClicked()
@@ -141,26 +126,7 @@ class AddOrUpdateActivity : AppCompatActivity(), MyMapFragment.OnLocationSelecte
 
                 val db = MainDatabase.getInstance(this.applicationContext)
                 val dao = db.getProductDao()
-                //  val imageFile = File(context.filesDir, "product_image.jpg")
 
-//                selectedImageUri?.let { uri ->
-//                    val imageName =
-//                        "product_image_${System.currentTimeMillis()}.jpg" // Generate a unique name
-//                    val imageFile =
-//                        File(this@AddOrUpdateActivity.applicationContext.filesDir, imageName)
-//
-//                    try {
-//                        this@AddOrUpdateActivity.contentResolver.openInputStream(uri)
-//                            ?.use { inputStream ->
-//                                FileOutputStream(imageFile).use { outputStream ->
-//                                    inputStream.copyTo(outputStream)
-//                                }
-//                            }
-
-//                        val selectedLatLng = mapFragment.getSelectedLocation()
-//                        if (selectedLatLng != null) {
-//                            val latitude = selectedLatLng.latitude
-//                            val longitude = selectedLatLng.longitude
 
                             val product = Product(
                                 name = productName,
@@ -173,7 +139,6 @@ class AddOrUpdateActivity : AppCompatActivity(), MyMapFragment.OnLocationSelecte
                             )
                 try {
                     Thread {
-                                dao.insertAProduct(product)
                                 if (isForUpdate) {
                                     product.id = receivedProduct!!.id
                                     product.timeStamp = UiUtility.getCurrentTimeStampWithActionSpecified("Updated at ")
@@ -193,25 +158,19 @@ class AddOrUpdateActivity : AppCompatActivity(), MyMapFragment.OnLocationSelecte
                                     setResultWithFinish(RESULT_CODE_COMPLETE, product)
                                 }
                             }.start()
-//                        } else {
-//                            Snackbar.make(
-//                                binding.root,
-//                                "Please select a location on the map",
-//                                Snackbar.LENGTH_SHORT
-//                            ).show()
-//                        }
+
                     } catch (e: Exception) {
                         e.printStackTrace()
                     runOnUiThread {
                         if (isForUpdate) {
                             UiUtility.showToast(
                                 this@AddOrUpdateActivity,
-                                "Couldn't update user. Try Again..."
+                                "Couldn't update product. Try Again."
                             )
                         } else {
                             UiUtility.showToast(
                                 this@AddOrUpdateActivity,
-                                "Couldn't insert user. Try Again..."
+                                "Couldn't insert product. Try Again."
                             )
                         }
                     }
@@ -457,9 +416,21 @@ class AddOrUpdateActivity : AppCompatActivity(), MyMapFragment.OnLocationSelecte
             binding.tieItemPrice.setText(this.price)
             binding.tieItemDescription.setText(this.description)
             binding.actvSpinnerProductCategory.setText(this.category)
+            productLatitude = this.storeLocationLat.toString()
+            productLongitude = this.storeLocationLng.toString()
             this.image?.apply {
                 loadThumbnailImage(this)
+                imageUriPath = this
             }
+            val lat = this.storeLocationLat
+            val lng = this.storeLocationLng
+            val geoCodedAddress = GeoCoding.reverseTheGeoCodeToAddress(
+                this@AddOrUpdateActivity,
+                lat ?: "",
+                lng ?: ""
+            )
+           binding.mbProductLocation.text = geoCodedAddress
+
         }
     }
 }
