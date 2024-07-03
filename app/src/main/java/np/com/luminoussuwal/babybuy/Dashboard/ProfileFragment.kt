@@ -1,9 +1,11 @@
 package np.com.luminoussuwal.babybuy.Dashboard
 
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +16,8 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import np.com.luminoussuwal.babybuy.LoginActivity
 import np.com.luminoussuwal.babybuy.R
 import np.com.luminoussuwal.babybuy.databinding.FragmentProfileBinding
@@ -55,7 +59,7 @@ class ProfileFragment : Fragment() {
         // Get user details from Firebase Authentication (or your data source)
         val user = auth.currentUser
         if (user != null) {
-            tvUserName.text = user.displayName ?: "User Name"
+
             tvUserEmail.text = user.email ?: "User Email"
 
             // Load user image using Glide (or your preferred image loading library)
@@ -63,6 +67,21 @@ class ProfileFragment : Fragment() {
 //                .load(user.photoUrl)
 //                .placeholder(R.drawable.ic_default_profile)
 //                .into(ivProfileImage)
+            val db = Firebase.firestore
+            val userRef = db.collection("users").document(user.uid)
+            userRef.get()
+                .addOnSuccessListener { document ->
+                    if (document != null) {
+                        tvUserName.text = document.getString("name") ?: "User Name"
+                        binding.tvUserPhone.text = document.getString("phone") ?: "User Phone"
+                        binding.tvUserAddress.text = document.getString("address") ?: "User Address"
+                    } else {
+                        Log.d(TAG, "No such document")
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Log.w(TAG, "Error getting document", e)
+                }
         }
 
         btnLogout.setOnClickListener {

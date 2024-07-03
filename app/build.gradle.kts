@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.play.services.location)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.play.services.cast.framework)
+    implementation(libs.firebase.firestore.ktx)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -82,6 +83,8 @@ dependencies {
     implementation(libs.cameraVideo)
     implementation(libs.cameraView)
     implementation(libs.cameraExtensions)
+
+    implementation("com.google.guava:guava:31.1-android")
 
 
     // To use Kotlin annotation processing tool (kapt)

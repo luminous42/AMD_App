@@ -25,4 +25,7 @@
         <item>Skin</item>
     </string-array>
 
+    <string name="user_phone">User Phone</string>
+    <string name="user_address">User Address</string>
+
 </resources>

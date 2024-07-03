@@ -24,6 +24,7 @@ ksp = "1.9.21-1.0.15"
 maps = "18.1.0"
 cameraX = "1.2.3"
 gmsLocation = "21.0.1"
+firebaseFirestoreKtx = "25.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -53,6 +54,7 @@ cameraLifeCycle = { group = "androidx.camera", name = "camera-lifecycle", versio
 cameraVideo = { group = "androidx.camera", name = "camera-video", version.ref = "cameraX"}
 cameraView = { group = "androidx.camera", name = "camera-view", version.ref = "cameraX"}
 cameraExtensions = { group = "androidx.camera", name = "camera-extensions", version.ref = "cameraX"}
+firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

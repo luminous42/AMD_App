@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="Send SMS"
+        android:text="Share Product through SMS"
         android:textStyle="bold"
         android:textSize="20sp"/>
 
@@ -25,26 +25,33 @@
         android:layout_marginTop="24dp"
         app:endIconDrawable="@drawable/ic_contact"
         app:endIconCheckable="true"
-        app:endIconMode="custom">
+        app:endIconMode="custom"
+        >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tie_contact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLength="10"
-            android:inputType="number"/>
+            android:inputType="number"
+            android:backgroundTint="@color/teal_200"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/mb_send_sms"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_contact"
         android:layout_marginTop="24dp"
-        app:cornerRadius="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:paddingHorizontal="60dp"
+        android:paddingVertical="10dp"
+        app:cornerRadius="30dp"
         android:text="Send"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

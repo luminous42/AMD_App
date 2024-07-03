@@ -17,6 +17,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.firestore
 import np.com.luminoussuwal.babybuy.databinding.ActivityLoginBinding
 import np.com.luminoussuwal.babybuy.databinding.ActivitySignUpBinding
 
@@ -44,6 +45,9 @@ class SignUpActivity : AppCompatActivity() {
             val email = binding.tieEmail.text.toString().trim()
             val password = binding.tiePassword.text.toString().trim()
             val confirmPassword = binding.tieConfirmPassword.text.toString().trim()
+            val name = binding.tieUsername.text.toString().trim()
+            val phone = binding.tiePhone.text.toString().trim()
+            val address = binding.tieAddress.text.toString().trim()
 
             if (email.isNullOrEmpty()) {
                 Toast.makeText(
@@ -83,6 +87,8 @@ class SignUpActivity : AppCompatActivity() {
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful){
                             val user = auth.currentUser
+
+                            saveAdditionalUserDetails(user?.uid, name, phone, address)
 
                             val rootView = findViewById<View>(android.R.id.content) // Get the root view of your layout
                             Snackbar.make(rootView, "Sign Up Successful!", Snackbar.LENGTH_SHORT).show()
@@ -125,7 +131,24 @@ class SignUpActivity : AppCompatActivity() {
             finish()
         }
     }
-
+    private fun saveAdditionalUserDetails(userId: String?, name: String, phone: String, address: String) {
+        if (userId != null) {
+            val db = Firebase.firestore
+            val userRef = db.collection("users").document(userId)
+            val userData = hashMapOf(
+                "name" to name,
+                "phone" to phone,
+                "address" to address
+            )
+            userRef.set(userData)
+                .addOnSuccessListener {
+                    Log.d(TAG, "User details saved successfully")
+                }
+                .addOnFailureListener { e ->
+                    Log.w(TAG, "Error saving user details", e)
+                }
+        }
+    }
     override fun onStart() {
         super.onStart()
         Log.i(TAG, "onStart: ")

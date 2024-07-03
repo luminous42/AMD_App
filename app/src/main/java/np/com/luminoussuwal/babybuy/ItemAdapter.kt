@@ -40,7 +40,7 @@ class ItemAdapter(private val items: List<Product>,
         val product = items[position]
 
         holder.binding.tvItemName.text = product.name
-        holder.binding.tvItemPrice.text = "Rs. " + product.price
+        holder.binding.tvItemPrice.text = "NPR " + product.price
         holder.binding.tvItemDescription.text = product.description
         holder.binding.tvItemCategory.text = product.category
 
@@ -55,7 +55,7 @@ class ItemAdapter(private val items: List<Product>,
             listener.onItemClicked(product, position)
         }
         if (product.markAsPurchased) {
-            val drawable = ContextCompat.getDrawable(applicationContext, R.drawable.ic_check_circle)
+            val drawable = ContextCompat.getDrawable(applicationContext, R.mipmap.blue_check1)
             holder.binding.tvItemName.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null)
         } else {
             holder.binding.tvItemName.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)

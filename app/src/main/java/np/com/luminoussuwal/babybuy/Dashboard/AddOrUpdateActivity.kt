@@ -82,9 +82,9 @@ class AddOrUpdateActivity : AppCompatActivity(), MyMapFragment.OnLocationSelecte
 
 
 
-        binding.fab.setOnClickListener {
-                pickImageLauncher.launch("image/*") // Launch the image picker
-            }
+//        binding.fab.setOnClickListener {
+//                pickImageLauncher.launch("image/*") // Launch the image picker
+//            }
 
 
 

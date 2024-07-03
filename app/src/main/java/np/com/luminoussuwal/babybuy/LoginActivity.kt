@@ -32,7 +32,7 @@ class LoginActivity : AppCompatActivity() {
 
         view.background = CloudDrawable()
 
-        FirebaseApp.initializeApp(this)
+        FirebaseApp.initializeApp(this.applicationContext)
         val auth = Firebase.auth
 
         Log.i(TAG, "onCreate: ")

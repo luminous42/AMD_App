@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import np.com.luminoussuwal.babybuy.AppConstants
-import np.com.luminoussuwal.babybuy.Dashboard.adapters.OffersHorizontalAdapter
 import np.com.luminoussuwal.babybuy.Dashboard.db.Product
 import np.com.luminoussuwal.babybuy.ItemAdapter
 import np.com.luminoussuwal.babybuy.databinding.FragmentItemBinding
@@ -23,7 +22,7 @@ class OfferFragment : Fragment(), ItemAdapter.ItemAdapterListener {
 
     private lateinit var binding: FragmentItemBinding
     private lateinit var startDetailViewActivity: ActivityResultLauncher<Intent>
-    private lateinit var adapter: OffersHorizontalAdapter
+    private lateinit var adapter: ItemAdapter
 
     private val productList = listOf(
         Product(1, "Gerber Organic Baby Food", "1200", "Gerber Organic 2nd Foods Baby Food, Banana, Apple, Blueberry, 4 oz, 2 Pack", "https://example.com/image1.jpg", "Food"),
@@ -100,8 +99,10 @@ class OfferFragment : Fragment(), ItemAdapter.ItemAdapterListener {
     }
 
     private fun populateRecyclerView(products: List<Product>) {
-        adapter = OffersHorizontalAdapter(
-            products
+        adapter = ItemAdapter(
+            products,
+            this,
+            requireActivity().applicationContext
         )
         binding.rvMyItems.adapter = adapter
         binding.rvMyItems.layoutManager = LinearLayoutManager(

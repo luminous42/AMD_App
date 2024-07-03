@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="purple_200">#e4f1ff</color>
-    <color name="purple_500">#394867</color>
-    <color name="purple_700">#394867</color>
+    <color name="purple_500">#0455bf</color>
+    <color name="purple_700">#0455bf</color>
     <color name="teal_200">#fefdef</color>
     <color name="teal_700">#d2e3c8</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#fefdef</color>
+
+    <color name="background_color">#F5F5F5</color>
+    <color name="card_background_color">#FFFFFF</color>
+    <color name="text_primary_color">#000000</color>
+    <color name="text_secondary_color">#757575</color>
+    <color name="fab_color">#03A9F4</color>
+    <color name="btn_color">#0095FF</color>
+
 </resources>

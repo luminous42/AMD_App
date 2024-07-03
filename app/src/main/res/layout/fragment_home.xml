@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Dashboard.HomeFragment">
+    tools:context=".Dashboard.HomeFragment"
+    android:background="@drawable/gradient_background">
 
 
     <ScrollView
@@ -39,6 +40,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
+                    android:fontFamily="@font/poppins_thin"
                     android:text="My Items"/>
                 <ImageButton
                     android:id="@+id/ib_items"
@@ -69,7 +71,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:text="Offers"/>
+                    android:text="Offers"
+                    android:fontFamily="@font/poppins_thin"/>
                 <ImageButton
                     android:id="@+id/ib_offers"
                     android:layout_width="wrap_content"
@@ -103,6 +106,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
+        android:backgroundTint="#58B9FE"
+        app:tint="@color/white"
         android:src="@drawable/baseline_add_24"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

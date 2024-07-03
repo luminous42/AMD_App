@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".Dashboard.DetailViewActivity"
     android:orientation="vertical"
-    android:background="#efedef">
+    android:background="@drawable/blue_gradient">
 
 
 
@@ -24,8 +24,9 @@
             <ImageView
                 android:id="@+id/product_image"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                tools:src="@android:drawable/ic_menu_gallery"/>
+                android:layout_height="250dp"
+                tools:src="@mipmap/img_holder"
+                android:scaleType="centerCrop"/>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -53,14 +54,11 @@
                         android:layout_height="wrap_content"
                         android:text="Mark as Purchased"
                         android:paddingStart="0dp"
-                        android:layout_marginTop="16dp"/>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.2dp"
-                        android:background="@android:color/darker_gray"
                         android:layout_marginTop="16dp"
+                        android:buttonTint="@color/black"
                         />
+
+
 
                     <TextView
                         android:id="@+id/product_title"

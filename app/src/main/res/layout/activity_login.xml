@@ -27,7 +27,7 @@
         app:layout_constraintBottom_toTopOf="@+id/til_email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:textStyle="bold"
+        android:fontFamily="@font/poppins_thin"
         android:textSize="28dp"/>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -51,6 +51,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
+            android:textSize="14sp"
+            android:padding="12dp"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -76,7 +78,9 @@
             android:id="@+id/tie_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:textSize="14sp"
+            android:padding="12dp"/>
 
 
 
@@ -96,11 +100,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:backgroundTint="#d2e3c8"
+            android:backgroundTint="@color/btn_color"
             android:paddingHorizontal="50dp"
             android:paddingVertical="10dp"
             android:text="Log In"
-            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
             app:cornerRadius="30dp" />
 
         <ProgressBar
