@@ -19,7 +19,7 @@
         <ImageView
             android:layout_width="0dp"
             android:layout_height="36dp"
-            android:src="@android:drawable/ic_menu_camera"
+            android:src="@mipmap/blue_check1"
             android:layout_weight="0.2"
             android:layout_gravity="start|center"/>
 
@@ -53,7 +53,7 @@
         <ImageView
             android:layout_width="0dp"
             android:layout_height="36dp"
-            android:src="@android:drawable/ic_menu_gallery"
+            android:src="@drawable/galleryicon"
             android:layout_weight="0.2"
             android:layout_gravity="start|center"/>
 

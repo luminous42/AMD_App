@@ -120,7 +120,7 @@ class LoginActivity : AppCompatActivity() {
                             sharedPrefEditor.putBoolean("isLoggedIn", true)
                             sharedPrefEditor.apply()
 
-                            binding.progressBar.visibility = View.GONE
+                         //   binding.progressBar.visibility = View.GONE
                             binding.btnLogin.isEnabled = true
 
                             Snackbar.make(

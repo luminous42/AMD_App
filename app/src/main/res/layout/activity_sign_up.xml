@@ -52,7 +52,7 @@
             android:inputType="textPersonName"
             android:textSize="14sp"
             android:padding="12dp"
-            android:autofillHints="name"
+            android:importantForAutofill="no"
             />
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
@@ -146,7 +146,7 @@
             android:inputType="textPassword"
             android:textSize="14sp"
             android:padding="12dp"
-            android:autofillHints="password"/>
+            android:importantForAutofill="yes"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -172,7 +172,8 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
             android:textSize="14sp"
-            android:padding="12dp"/>
+            android:padding="12dp"
+            android:importantForAutofill="no"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 

@@ -11,6 +11,7 @@ import android.telephony.SmsManager
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -19,9 +20,11 @@ import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import np.com.luminoussuwal.babybuy.AppConstants
+import np.com.luminoussuwal.babybuy.Dashboard.AddOrUpdateActivity.Companion.RESULT_CODE_COMPLETE
 import np.com.luminoussuwal.babybuy.Dashboard.db.MainDatabase
 import np.com.luminoussuwal.babybuy.Dashboard.db.Product
 import np.com.luminoussuwal.babybuy.R
@@ -79,6 +82,8 @@ class DetailViewActivity : AppCompatActivity() {
             menu.findItem(R.id.action_share).isVisible = false
             menu.findItem(R.id.action_delete).isVisible = false
             menu.findItem(R.id.action_edit).isVisible = false
+
+            setUpAddtoProductCheckbox()
         }
 
         return super.onPrepareOptionsMenu(menu)
@@ -155,10 +160,16 @@ class DetailViewActivity : AppCompatActivity() {
         }
 
         // Hide mark as purchased checkbox for suggestions
-//        if (intent.getBooleanExtra(AppConstants.KEY_IS_SUGGESTION, false)) {
-//            invalidateOptionsMenu()
-//            detailViewBinding.cbPurchased.visibility = View.GONE
-//        }
+        if (intent.getBooleanExtra(AppConstants.KEY_IS_SUGGESTION, false)) {
+            invalidateOptionsMenu()
+            detailViewBinding.cbPurchased.visibility = View.GONE
+            detailViewBinding.cbAddtoproduct.visibility = View.VISIBLE
+        }
+
+            else{
+            detailViewBinding.cbAddtoproduct.visibility = View.GONE
+        }
+
     }
 
     private fun setUpButtons() {
@@ -218,6 +229,101 @@ class DetailViewActivity : AppCompatActivity() {
         }
     }
 
+    private fun setUpAddtoProductCheckbox() {
+        detailViewBinding.cbAddtoproduct.setOnCheckedChangeListener { _, isChecked ->
+            handleCheckChangedForAddtoProduct(isChecked)
+        }
+    }
+
+    private fun handleCheckChangedForAddtoProduct(isChecked: Boolean) {
+        if (isChecked) {
+            updateProductWithAddtoProductTrue()
+        } else {
+            updateProductWithAddtoProductFalse()
+        }
+    }
+
+    private fun updateProductWithAddtoProductTrue(){
+        receivedProduct?.apply {
+
+            onAddItemClicked(this)
+        }
+    }
+
+    private fun updateProductWithAddtoProductFalse() {
+
+
+            MaterialAlertDialogBuilder(this)
+                .setTitle("Delete Confirmation")
+                .setMessage("Do you want to delete this product?")
+                .setPositiveButton(
+                    "Yes"
+                ) { dialogInterface, i ->
+                    deleteProduct()
+                }
+                .setNegativeButton(
+                    "No"
+                ) { dialogInterface, i ->
+                    dialogInterface.dismiss()
+                }
+                .show()
+
+    }
+
+    private fun onAddItemClicked(product: Product) {
+        val db = MainDatabase.getInstance(this.applicationContext)
+        val dao = db.getProductDao()
+
+        // Create product object
+
+        try {
+            // Database operations in a background thread
+            Thread {
+
+                product.timeStamp =
+                    UiUtility.getCurrentTimeStampWithActionSpecified("Created at ")
+                dao.insertAProduct(product)
+
+                runOnUiThread {
+                    Snackbar.make(
+                        detailViewBinding.root,
+                        "Product added successfully!",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+
+
+                    setResultWithFinish(RESULT_CODE_COMPLETE)
+                }
+            }.start()
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            runOnUiThread {
+
+
+
+                    UiUtility.showToast(
+                        this@DetailViewActivity,
+                        "Couldn't add product. Try Again."
+                    )
+
+            }
+
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
     private fun handleCheckChangedForMarkAsPurchased(isChecked: Boolean) {
         if (isChecked) {
             updateProductWithMarkAsPurchasedTrue()
@@ -225,6 +331,19 @@ class DetailViewActivity : AppCompatActivity() {
             updateProductWithMarkAsPurchasedFalse()
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private fun updateProductWithMarkAsPurchasedTrue() {
         receivedProduct?.markAsPurchased = true
