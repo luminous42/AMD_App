@@ -206,12 +206,13 @@
 
     <Button
         android:id="@+id/btn_add_or_update"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_marginBottom="32dp"
-        android:backgroundTint="#e4f1ff"
+        android:fontFamily="@font/poppins_thin"
+        android:backgroundTint="@color/btn_color"
         android:text="Add"
         android:textAllCaps="false"
         android:paddingHorizontal="60dp"

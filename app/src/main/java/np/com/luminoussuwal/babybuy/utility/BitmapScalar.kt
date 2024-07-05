@@ -2,7 +2,7 @@ package np.com.luminoussuwal.babybuy.utility
 
 import android.graphics.Bitmap
 
-class BitmapScalar{
+class BitmapScalar {
     companion object {
         // scale and keep aspect ratio
         fun scaleToFitWidth(b: Bitmap, width: Int): Bitmap? {

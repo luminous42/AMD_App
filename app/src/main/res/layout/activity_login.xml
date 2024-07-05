@@ -35,6 +35,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Email"
+
+        app:startIconDrawable="@drawable/baseline_email_24"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -42,6 +44,7 @@
         app:boxCornerRadiusBottomEnd="30dp"
         app:boxCornerRadiusTopStart="30dp"
         app:boxCornerRadiusBottomStart="30dp"
+        android:drawablePadding="30dp"
         android:paddingTop="32dp">
 
 
@@ -51,8 +54,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
+            android:paddingStart="45dp"
             android:textSize="14sp"
-            android:padding="12dp"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -64,6 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:hint="Password"
+        app:startIconDrawable="@drawable/baseline_lock_24"
         app:boxBackgroundMode="outline"
         app:boxCornerRadiusBottomEnd="30dp"
         app:boxCornerRadiusBottomStart="30dp"
@@ -79,9 +83,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:textSize="14sp"
-            android:padding="12dp"/>
-
+            android:paddingStart="45dp"
+            android:textSize="14sp" />
 
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -120,22 +123,22 @@
     </FrameLayout>
 
 
-    <TextView
-        android:id="@+id/tv_forgotpassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Forgot Password?"
-        app:layout_constraintTop_toBottomOf="@id/fl_login"
-        android:layout_marginTop="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+<!--    <TextView-->
+<!--        android:id="@+id/tv_forgotpassword"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Forgot Password?"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/fl_login"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"/>-->
 
     <TextView
         android:id="@+id/tv_signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Dont have an Account?"
-        app:layout_constraintTop_toBottomOf="@id/tv_forgotpassword"
+        app:layout_constraintTop_toBottomOf="@id/fl_login"
         android:layout_marginTop="18dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

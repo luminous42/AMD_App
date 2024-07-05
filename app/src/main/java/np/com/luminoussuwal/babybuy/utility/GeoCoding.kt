@@ -1,4 +1,5 @@
 package np.com.luminoussuwal.babybuy.utility
+
 import android.content.Context
 import android.location.Address
 import android.location.Geocoder
@@ -8,7 +9,11 @@ import java.util.Locale
 class GeoCoding {
 
     companion object {
-        fun reverseTheGeoCodeToAddress(context: Context, latitude: String, longitude: String): String {
+        fun reverseTheGeoCodeToAddress(
+            context: Context,
+            latitude: String,
+            longitude: String
+        ): String {
             var finalAddress = ""
             try {
                 var countryName = ""

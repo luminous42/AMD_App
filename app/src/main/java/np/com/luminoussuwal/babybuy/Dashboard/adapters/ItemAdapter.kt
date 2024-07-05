@@ -1,3 +1,4 @@
+
 package np.com.luminoussuwal.babybuy.Dashboard.adapters
 
 import android.content.Context
@@ -11,31 +12,26 @@ import np.com.luminoussuwal.babybuy.Dashboard.db.Product
 import np.com.luminoussuwal.babybuy.R
 import np.com.luminoussuwal.babybuy.databinding.ItemViewBinding
 
-// Adapter for displaying a horizontal list of product offers in a RecyclerView
-class OffersHorizontalAdapter(
-    val products: List<Product>,  // List of products to display
+// Adapter for displaying a list of products in a RecyclerView
+class ItemAdapter(
+    private val items: List<Product>,  // List of products to display
     private val listener: ItemAdapterListener,  // Listener for item interactions
     private val applicationContext: Context  // Application context
-) : RecyclerView.Adapter<OffersHorizontalAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
 
     // ViewHolder class that holds the view for each item
-    class ViewHolder(
-        val binding: ItemViewBinding
-    ) : RecyclerView.ViewHolder(binding.root)
-
-    // Inflate the item layout and create the ViewHolder
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): ViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val binding = ItemViewBinding.inflate(layoutInflater)
-        return ViewHolder(binding)
+    inner class ViewHolder(val binding: ItemViewBinding) : RecyclerView.ViewHolder(binding.root) {
+        // Bind data to the view elements
+        fun bind(item: String) {
+            // binding.tvItemName.text = "newname"
+            // Set the image resource or any other view properties if needed
+        }
     }
 
-    // Return the total number of items in the list
-    override fun getItemCount(): Int {
-        return products.size
+    // Inflate the item layout and create the ViewHolder
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
     // Bind data to the views in the ViewHolder
@@ -43,13 +39,13 @@ class OffersHorizontalAdapter(
         holder: ViewHolder,
         position: Int
     ) {
-        val product = products[position]  // Get the product at the current position
+        val product = items[position]  // Get the product at the current position
 
         // Set the product details to the corresponding views
-        holder.binding.tvItemCategory.text = product.category
         holder.binding.tvItemName.text = product.name
         holder.binding.tvItemPrice.text = "NPR " + product.price
         holder.binding.tvItemDescription.text = product.description
+        holder.binding.tvItemCategory.text = product.category
 
         // Load the product image using Glide
         Glide.with(holder.itemView.context)
@@ -84,8 +80,14 @@ class OffersHorizontalAdapter(
         // holder.binding.tvTimestamp.text = product.timeStamp
     }
 
+    // Return the total number of items in the list
+    override fun getItemCount(): Int {
+        return items.size
+    }
+
     // Interface for item interaction callbacks
     interface ItemAdapterListener {
         fun onItemClicked(product: Product, position: Int)  // Called when an item is clicked
+        fun onOfferClicked(product: Product, position: Int)  // Called when an offer is clicked
     }
 }

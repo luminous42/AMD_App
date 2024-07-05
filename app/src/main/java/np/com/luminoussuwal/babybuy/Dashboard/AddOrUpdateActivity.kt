@@ -1,6 +1,5 @@
 package np.com.luminoussuwal.babybuy.Dashboard
 
-
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -33,12 +32,10 @@ import java.io.IOException
 class AddOrUpdateActivity : AppCompatActivity(), MyMapFragment.OnLocationSelectedListener {
 
     private lateinit var binding: ActivityAddOrUpdateBinding
-
     private lateinit var profilepic: ImageView
     private lateinit var fab: FloatingActionButton
 
     private var selectedImageUri: Uri? = null
-
     private var receivedProduct: Product? = null
     private var isForUpdate = false
     private var imageUriPath = ""
@@ -54,7 +51,6 @@ class AddOrUpdateActivity : AppCompatActivity(), MyMapFragment.OnLocationSelecte
         const val GALLERY_PERMISSION_REQUEST_CODE = 11
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -67,44 +63,36 @@ class AddOrUpdateActivity : AppCompatActivity(), MyMapFragment.OnLocationSelecte
         bindCustomCameraActivityForResult()
         bindMapsActivityForResult()
         bindGalleryActivityForResult()
-
         updateContentIfProductReceived()
 
-
-
+        // Load the map fragment
         val mapFragment = MyMapFragment()
         supportFragmentManager.beginTransaction()
             .replace(R.id.map_fragment_container, mapFragment)
             .commit()
 
-
         profilepic = binding.ivAddImage // access ImageView
 
-
-
-//        binding.fab.setOnClickListener {
-//                pickImageLauncher.launch("image/*") // Launch the image picker
-//            }
-
-
-
+        // Set onClickListener for the image add button
         binding.ivAddImage.setOnClickListener {
             handleImageAddButtonClicked()
         }
 
+        // Set onClickListener for the add/update button
         binding.btnAddOrUpdate.setOnClickListener {
             val productName = binding.tieItemName.text.toString()
             val productPrice = binding.tieItemPrice.text.toString()
             val productDescription = binding.tieItemDescription.text.toString()
             val category = binding.actvSpinnerProductCategory.text.toString()
 
+            // Validation for the input fields
             if (productName.isBlank()) {
                 Toast.makeText(
                     this@AddOrUpdateActivity,
                     "Please enter a product name",
                     Toast.LENGTH_SHORT
                 ).show()
-            } else if(productPrice.isBlank()) {
+            } else if (productPrice.isBlank()) {
                 Toast.makeText(
                     this@AddOrUpdateActivity,
                     "Please enter a product price",
@@ -127,40 +115,43 @@ class AddOrUpdateActivity : AppCompatActivity(), MyMapFragment.OnLocationSelecte
                 val db = MainDatabase.getInstance(this.applicationContext)
                 val dao = db.getProductDao()
 
-
-                            val product = Product(
-                                name = productName,
-                                price = productPrice,
-                                description = productDescription,
-                                storeLocationLat = productLatitude,
-                                storeLocationLng = productLongitude,
-                                image = imageUriPath,
-                                category = category
-                            )
+                // Create product object
+                val product = Product(
+                    name = productName,
+                    price = productPrice,
+                    description = productDescription,
+                    storeLocationLat = productLatitude,
+                    storeLocationLng = productLongitude,
+                    image = imageUriPath,
+                    category = category
+                )
                 try {
+                    // Database operations in a background thread
                     Thread {
-                                if (isForUpdate) {
-                                    product.id = receivedProduct!!.id
-                                    product.timeStamp = UiUtility.getCurrentTimeStampWithActionSpecified("Updated at ")
-                                    dao.updateProduct(product)
-                                } else {
-                                    product.timeStamp = UiUtility.getCurrentTimeStampWithActionSpecified("Created at ")
-                                    dao.insertAProduct(product)
-                                }
-                                runOnUiThread  {
-                                    Snackbar.make(
-                                        binding.root,
-                                        "Product added successfully!",
-                                        Snackbar.LENGTH_SHORT
-                                    ).show()
+                        if (isForUpdate) {
+                            product.id = receivedProduct!!.id
+                            product.timeStamp =
+                                UiUtility.getCurrentTimeStampWithActionSpecified("Updated at ")
+                            dao.updateProduct(product)
+                        } else {
+                            product.timeStamp =
+                                UiUtility.getCurrentTimeStampWithActionSpecified("Created at ")
+                            dao.insertAProduct(product)
+                        }
+                        runOnUiThread {
+                            Snackbar.make(
+                                binding.root,
+                                "Product added successfully!",
+                                Snackbar.LENGTH_SHORT
+                            ).show()
 
-                                    clearFieldsData()
-                                    setResultWithFinish(RESULT_CODE_COMPLETE, product)
-                                }
-                            }.start()
+                            clearFieldsData()
+                            setResultWithFinish(RESULT_CODE_COMPLETE, product)
+                        }
+                    }.start()
 
-                    } catch (e: Exception) {
-                        e.printStackTrace()
+                } catch (e: Exception) {
+                    e.printStackTrace()
                     runOnUiThread {
                         if (isForUpdate) {
                             UiUtility.showToast(
@@ -174,30 +165,31 @@ class AddOrUpdateActivity : AppCompatActivity(), MyMapFragment.OnLocationSelecte
                             )
                         }
                     }
-                    }
                 }
-            //}
+            }
         }
+
         // Set up the ActionBar
         val actionBar = supportActionBar
         actionBar?.apply {
-            title = "New Item"
+            title = "New Product"
             setDisplayHomeAsUpEnabled(true) // Enable the back button
         }
-
-
     }
+
     override fun onLocationSelected(latitude: String, longitude: String) {
         productLatitude = latitude
         productLongitude = longitude
         onLocationDataFetched()
     }
+
     private fun clearFieldsData() {
         binding.tieItemPrice.text?.clear()
         binding.tieItemPrice.text?.clear()
         binding.tieItemDescription.text?.clear()
         binding.actvSpinnerProductCategory.text.clear()
     }
+
     private fun setResultWithFinish(resultCode: Int, product: Product?) {
         val intent = Intent()
         intent.putExtra(AppConstants.KEY_PRODUCT, product)
@@ -206,6 +198,7 @@ class AddOrUpdateActivity : AppCompatActivity(), MyMapFragment.OnLocationSelecte
     }
 
     private fun handleImageAddButtonClicked() {
+        // Show bottom sheet dialog to pick an image
         val pickImageBottomSheetDialog = BottomSheetDialog(this)
         pickImageBottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog_pick_image)
 
@@ -268,7 +261,6 @@ class AddOrUpdateActivity : AppCompatActivity(), MyMapFragment.OnLocationSelecte
             Intent.ACTION_OPEN_DOCUMENT,
             MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         )
-//        intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         startGalleryActivityForResult.launch(arrayOf("image/*"))
     }
@@ -292,6 +284,7 @@ class AddOrUpdateActivity : AppCompatActivity(), MyMapFragment.OnLocationSelecte
             }
         }
     }
+
     private fun startMapActivity() {
         val intent = Intent(this, MapsActivity::class.java)
         startMapActivityForResult.launch(intent)
@@ -312,24 +305,25 @@ class AddOrUpdateActivity : AppCompatActivity(), MyMapFragment.OnLocationSelecte
         }
     }
 
-
     private fun bindCustomCameraActivityForResult() {
         startCustomCameraActivityForResult = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()) {
+            ActivityResultContracts.StartActivityForResult()
+        ) {
             if (it.resultCode == CustomCameraActivity.CAMERA_ACTIVITY_SUCCESS_RESULT_CODE) {
-                imageUriPath = it.data?.getStringExtra(CustomCameraActivity.CAMERA_ACTIVITY_OUTPUT_FILE_PATH)!!
+                imageUriPath =
+                    it.data?.getStringExtra(CustomCameraActivity.CAMERA_ACTIVITY_OUTPUT_FILE_PATH)!!
                 loadThumbnailImage(imageUriPath)
             } else {
-                imageUriPath = "";
-                binding.ivAddImage.setImageResource(android.R.drawable.ic_menu_gallery)
+                imageUriPath = ""
+                binding.ivAddImage.setImageResource(R.mipmap.img_holder)
             }
         }
     }
 
-
     private fun bindGalleryActivityForResult() {
         startGalleryActivityForResult = registerForActivityResult(
-            ActivityResultContracts.OpenDocument()) {
+            ActivityResultContracts.OpenDocument()
+        ) {
             if (it != null) {
                 imageUriPath = it.toString()
                 contentResolver.takePersistableUriPermission(
@@ -338,42 +332,43 @@ class AddOrUpdateActivity : AppCompatActivity(), MyMapFragment.OnLocationSelecte
                 )
                 loadThumbnailImage(imageUriPath)
             } else {
-                imageUriPath = "";
-                binding.ivAddImage.setImageResource(android.R.drawable.ic_menu_gallery)
+                imageUriPath = ""
+                binding.ivAddImage.setImageResource(R.mipmap.img_holder)
             }
         }
     }
 
-
     private fun bindMapsActivityForResult() {
         startMapActivityForResult = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()) {
+            ActivityResultContracts.StartActivityForResult()
+        ) {
             if (it.resultCode == MapsActivity.MAPS_ACTIVITY_SUCCESS_RESULT_CODE) {
-                productLatitude = it.data?.getStringExtra(AppConstants.KEY_PRODUCT_LATITUDE).toString()
-                productLongitude = it.data?.getStringExtra(AppConstants.KEY_PRODUCT_LONGITUDE).toString()
+                productLatitude =
+                    it.data?.getStringExtra(AppConstants.KEY_PRODUCT_LATITUDE).toString()
+                productLongitude =
+                    it.data?.getStringExtra(AppConstants.KEY_PRODUCT_LONGITUDE).toString()
                 onLocationDataFetched()
             }
         }
     }
 
-
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            android.R.id.home -> {onBackPressedDispatcher.onBackPressed() // Use the recommended way to navigate back
+            android.R.id.home -> {
+                onBackPressedDispatcher.onBackPressed() // Use the recommended way to navigate back
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-        uri?.let {
-            selectedImageUri = it
-            profilepic.setImageURI(it)
-
+    private val pickImageLauncher =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let {
+                selectedImageUri = it
+                profilepic.setImageURI(it)
+            }
         }
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -386,7 +381,6 @@ class AddOrUpdateActivity : AppCompatActivity(), MyMapFragment.OnLocationSelecte
             profilepic.setImageURI(it)
         }
     }
-
 
     private fun setProductCategories(selectedItem: String?) {
         val myAdapter = ArrayAdapter<String>(
@@ -406,12 +400,20 @@ class AddOrUpdateActivity : AppCompatActivity(), MyMapFragment.OnLocationSelecte
         setResultWithFinish(RESULT_CODE_CANCEL, null)
     }
 
-    //Updating content in page if it is an update case
+    // Updating content in page if it is an update case
     private fun updateContentIfProductReceived() {
         receivedProduct = intent.getParcelableExtra(AppConstants.KEY_PRODUCT)
         receivedProduct?.apply {
             binding.btnAddOrUpdate.text = "Update"
             isForUpdate = true
+
+            // Set up the ActionBar
+            val actionBar = supportActionBar
+            actionBar?.apply {
+                title = "Update Product"
+                setDisplayHomeAsUpEnabled(true) // Enable the back button
+            }
+
             binding.tieItemName.setText(this.name)
             binding.tieItemPrice.setText(this.price)
             binding.tieItemDescription.setText(this.description)
@@ -429,8 +431,7 @@ class AddOrUpdateActivity : AppCompatActivity(), MyMapFragment.OnLocationSelecte
                 lat ?: "",
                 lng ?: ""
             )
-           binding.mbProductLocation.text = geoCodedAddress
-
+            binding.mbProductLocation.text = geoCodedAddress
         }
     }
 }

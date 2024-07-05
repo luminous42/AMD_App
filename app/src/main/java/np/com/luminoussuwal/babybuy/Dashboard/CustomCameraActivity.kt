@@ -7,7 +7,6 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -15,10 +14,7 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.google.common.util.concurrent.ListenableFuture
-import np.com.luminoussuwal.babybuy.R
 import np.com.luminoussuwal.babybuy.databinding.ActivityCustomCameraBinding
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -45,6 +41,7 @@ class CustomCameraActivity : AppCompatActivity() {
         customCameraBinding = ActivityCustomCameraBinding.inflate(layoutInflater)
         setContentView(customCameraBinding.root)
 
+        // Check and request permissions if not granted
         if (allPermissionGranted()) {
             initializeCustomCamera()
         } else {
@@ -54,12 +51,15 @@ class CustomCameraActivity : AppCompatActivity() {
             )
         }
 
+        // Set click listeners for cancel and capture buttons
         customCameraBinding.mbCancel.setOnClickListener { setFailureResultBackToCallingComponent("Camera cancelled...") }
-
         customCameraBinding.mbCameraClick.setOnClickListener { captureImage() }
+
+        // Create a single-thread executor to handle camera operations
         cameraExecutor = Executors.newSingleThreadExecutor()
     }
 
+    // Check if all required permissions are granted
     private fun allPermissionGranted(): Boolean {
         var granted = false
         for (permission in getPermissionsRequiredForCamera()) {
@@ -72,6 +72,7 @@ class CustomCameraActivity : AppCompatActivity() {
         return granted
     }
 
+    // Return a list of permissions required for camera operation
     private fun getPermissionsRequiredForCamera(): List<String> {
         val permissions: MutableList<String> = ArrayList()
         permissions.add(Manifest.permission.CAMERA)
@@ -80,6 +81,7 @@ class CustomCameraActivity : AppCompatActivity() {
         return permissions
     }
 
+    // Initialize the custom camera setup using CameraX library
     private fun initializeCustomCamera() {
         cameraProviderFuture = ProcessCameraProvider.getInstance(this)
         cameraProviderFuture!!.addListener(
@@ -110,6 +112,7 @@ class CustomCameraActivity : AppCompatActivity() {
         )
     }
 
+    // Capture image using ImageCapture API
     private fun captureImage() {
         //If this instance is null, we don't have to proceed further
         if (imageCapture == null) {
@@ -152,6 +155,7 @@ class CustomCameraActivity : AppCompatActivity() {
         )
     }
 
+    // Set success result back to the calling component
     private fun setSuccessResultBackToCallingComponent(outputFileUriPath: String) {
         val intent = Intent()
         intent.putExtra(CAMERA_ACTIVITY_OUTPUT_FILE_PATH, outputFileUriPath)
@@ -159,6 +163,7 @@ class CustomCameraActivity : AppCompatActivity() {
         finish()
     }
 
+    // Set failure result back to the calling component
     private fun setFailureResultBackToCallingComponent(exceptionMessage: String?) {
         val intent = Intent()
         intent.putExtra(CAMERA_ACTIVITY_OUTPUT_FILE_PATH, exceptionMessage)
@@ -166,11 +171,13 @@ class CustomCameraActivity : AppCompatActivity() {
         finish()
     }
 
+    // Handle back press to set failure result and finish the activity
     override fun onBackPressed() {
         setResult(CAMERA_ACTIVITY_FAILURE_RESULT_CODE)
         super.onBackPressed()
     }
 
+    // Shutdown the camera executor when activity is destroyed
     override fun onDestroy() {
         super.onDestroy()
         cameraExecutor!!.shutdown()

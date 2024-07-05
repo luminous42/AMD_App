@@ -8,17 +8,11 @@ import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Firebase
-import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
-import np.com.luminoussuwal.babybuy.databinding.ActivityLoginBinding
 import np.com.luminoussuwal.babybuy.databinding.ActivitySignUpBinding
 
 class SignUpActivity : AppCompatActivity() {
@@ -37,11 +31,11 @@ class SignUpActivity : AppCompatActivity() {
 
 
 
-         auth = FirebaseAuth.getInstance()
+        auth = FirebaseAuth.getInstance()
 
         Log.i(TAG, "onCreate: ")
 
-        binding.btnSignUp.setOnClickListener{
+        binding.btnSignUp.setOnClickListener {
             val email = binding.tieEmail.text.toString().trim()
             val password = binding.tiePassword.text.toString().trim()
             val confirmPassword = binding.tieConfirmPassword.text.toString().trim()
@@ -85,13 +79,15 @@ class SignUpActivity : AppCompatActivity() {
 
                 auth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful){
+                        if (task.isSuccessful) {
                             val user = auth.currentUser
 
                             saveAdditionalUserDetails(user?.uid, name, phone, address)
 
-                            val rootView = findViewById<View>(android.R.id.content) // Get the root view of your layout
-                            Snackbar.make(rootView, "Sign Up Successful!", Snackbar.LENGTH_SHORT).show()
+                            val rootView =
+                                findViewById<View>(android.R.id.content) // Get the root view of your layout
+                            Snackbar.make(rootView, "Sign Up Successful!", Snackbar.LENGTH_SHORT)
+                                .show()
 
                             //Navigating to Login Activity
                             Handler(Looper.getMainLooper()).postDelayed({
@@ -99,15 +95,15 @@ class SignUpActivity : AppCompatActivity() {
                                 startActivity(intent)
                                 finish()
                             }, 1000)
-                        }
-                        else{
+                        } else {
                             Toast.makeText(
                                 this@SignUpActivity,
-                                "Sign Up failed",
+                                "Email already registered.",
                                 Toast.LENGTH_SHORT
                             ).show()
 
-                        }                        }
+                        }
+                    }
 
                 //Storing signup session in SharedPreferences
 //                val sharedPreferences = this@SignUpActivity
@@ -131,7 +127,13 @@ class SignUpActivity : AppCompatActivity() {
             finish()
         }
     }
-    private fun saveAdditionalUserDetails(userId: String?, name: String, phone: String, address: String) {
+
+    private fun saveAdditionalUserDetails(
+        userId: String?,
+        name: String,
+        phone: String,
+        address: String
+    ) {
         if (userId != null) {
             val db = Firebase.firestore
             val userRef = db.collection("users").document(userId)
@@ -149,6 +151,7 @@ class SignUpActivity : AppCompatActivity() {
                 }
         }
     }
+
     override fun onStart() {
         super.onStart()
         Log.i(TAG, "onStart: ")

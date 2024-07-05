@@ -40,6 +40,24 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:textStyle="bold"
                     android:text="My Items"/>
+                            <Button
+                                android:id="@+id/add_btn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Add your First Item"
+                                android:textAllCaps="false"
+                                android:backgroundTint="@color/btn_color"
+                                android:textColor="#FFFFFF"
+                                android:fontFamily="@font/poppins_thin"
+                                android:layout_marginTop="300dp"
+                                app:layout_constraintStart_toStartOf="parent"
+
+                                android:layout_marginHorizontal="10dp"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+
+                                app:cornerRadius="30dp"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_my_items"

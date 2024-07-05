@@ -2,23 +2,20 @@ package np.com.luminoussuwal.babybuy.Dashboard
 
 import android.Manifest
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
-import android.provider.MediaStore
 import android.telephony.SmsManager
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -29,11 +26,8 @@ import np.com.luminoussuwal.babybuy.Dashboard.db.MainDatabase
 import np.com.luminoussuwal.babybuy.Dashboard.db.Product
 import np.com.luminoussuwal.babybuy.R
 import np.com.luminoussuwal.babybuy.databinding.ActivityDetailViewBinding
-import np.com.luminoussuwal.babybuy.utility.BitmapScalar
 import np.com.luminoussuwal.babybuy.utility.GeoCoding
 import np.com.luminoussuwal.babybuy.utility.UiUtility
-import java.io.IOException
-
 
 class DetailViewActivity : AppCompatActivity() {
     private lateinit var detailViewBinding: ActivityDetailViewBinding
@@ -48,6 +42,7 @@ class DetailViewActivity : AppCompatActivity() {
 
     private lateinit var startAddItemActivity: ActivityResultLauncher<Intent>
     private lateinit var startContactActivityForResult: ActivityResultLauncher<Intent>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         detailViewBinding = ActivityDetailViewBinding.inflate(layoutInflater)
@@ -56,10 +51,10 @@ class DetailViewActivity : AppCompatActivity() {
         bindContactPickerActivityForResult()
 
         receivedProduct = intent.getParcelableExtra(AppConstants.KEY_PRODUCT)
+
         receivedProduct?.apply {
             populateDataToTheViews(this)
         }
-
 
         // Set up the ActionBar
         val actionBar = supportActionBar
@@ -70,29 +65,47 @@ class DetailViewActivity : AppCompatActivity() {
 
         setUpMarkAsPurchasedCheckbox()
     }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.detail_view_menu, menu)
         return true
     }
+
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        val isSuggestion = intent.getBooleanExtra(AppConstants.KEY_IS_SUGGESTION, false)
+
+        if (isSuggestion) {
+            menu.findItem(R.id.action_share).isVisible = false
+            menu.findItem(R.id.action_delete).isVisible = false
+            menu.findItem(R.id.action_edit).isVisible = false
+        }
+
+        return super.onPrepareOptionsMenu(menu)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
                 onBackPressed()
                 true
             }
+
             R.id.action_edit -> {
                 setUpEditButton()
                 true
             }
+
             R.id.action_delete -> {
                 setUpDeleteButton()
                 true
             }
+
             R.id.action_share -> {
                 setUpShareButton()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -117,33 +130,17 @@ class DetailViewActivity : AppCompatActivity() {
         detailViewBinding.productDescription.text = product?.description
         detailViewBinding.cbPurchased.isChecked = (product?.markAsPurchased == true)
 
-        /**
-         * Scaling the image into the view based on its width and heigh
-         */
-        product?.image?.apply {
+        // Load image using Glide
+        product?.image?.let { imageUrl ->
             detailViewBinding.productImage.post {
-                var bitmap: Bitmap?
-                try {
-                    bitmap = MediaStore.Images.Media.getBitmap(
-                        applicationContext.contentResolver,
-                        Uri.parse(this)
-                    )
-                    bitmap = BitmapScalar.stretchToFill(
-                        bitmap,
-                        detailViewBinding.productImage.width,
-                        detailViewBinding.productImage.height
-                    )
-                    detailViewBinding.productImage.setImageBitmap(bitmap)
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
+                Glide.with(applicationContext)
+                    .load(Uri.parse(imageUrl))
+                    .centerCrop()
+                    .into(detailViewBinding.productImage)
             }
         }
 
-        /**
-         * Splitting the latlng string into lat and lng
-         * Based on the latlng, reverse geocoding to get the actual location
-         */
+        // Reverse geocode to get the actual location from latlng
         try {
             val lat = product?.storeLocationLat
             val lng = product?.storeLocationLng
@@ -153,16 +150,15 @@ class DetailViewActivity : AppCompatActivity() {
                 lng ?: ""
             )
             detailViewBinding.productLocation.text = geoCodedAddress
-        } catch (exception: java.lang.Exception) {
+        } catch (exception: Exception) {
             exception.printStackTrace()
         }
 
-        if (intent.getBooleanExtra(AppConstants.KEY_IS_SUGGESTION, false)) {
-         //   detailViewBinding.ibEdit.visibility = View.GONE
-          //  detailViewBinding.ibShare.visibility = View.GONE
-          //  detailViewBinding.ibDelete.visibility = View.GONE
-            detailViewBinding.cbPurchased.visibility = View.GONE
-        }
+        // Hide mark as purchased checkbox for suggestions
+//        if (intent.getBooleanExtra(AppConstants.KEY_IS_SUGGESTION, false)) {
+//            invalidateOptionsMenu()
+//            detailViewBinding.cbPurchased.visibility = View.GONE
+//        }
     }
 
     private fun setUpButtons() {
@@ -174,64 +170,51 @@ class DetailViewActivity : AppCompatActivity() {
     }
 
     private fun setUpBackButton() {
-
-            setResultWithFinish(RESULT_CODE_REFRESH)
-
+        setResultWithFinish(RESULT_CODE_REFRESH)
     }
 
     private fun setUpEditButton() {
-
-            val intent = Intent(
-                this,
-                AddOrUpdateActivity::class.java
-            ).apply {
-                this.putExtra(AppConstants.KEY_PRODUCT, receivedProduct)
-                this.putExtra(AppConstants.KEY_IS_UPDATE, true)
-            }
-            startAddItemActivity.launch(intent)
-
+        val intent = Intent(
+            this,
+            AddOrUpdateActivity::class.java
+        ).apply {
+            this.putExtra(AppConstants.KEY_PRODUCT, receivedProduct)
+            this.putExtra(AppConstants.KEY_IS_UPDATE, true)
+        }
+        startAddItemActivity.launch(intent)
     }
 
     private fun setUpDeleteButton() {
-
-            MaterialAlertDialogBuilder(this)
-                .setTitle("Delete Confirmation")
-                .setMessage("Do you want to delete this product?")
-                .setPositiveButton(
-                    "Yes",
-                    DialogInterface.OnClickListener {
-                            dialogInterface,
-                            i -> deleteProduct()
-                    })
-                .setNegativeButton(
-                    "No",
-                    DialogInterface.OnClickListener {
-                            dialogInterface,
-                            i ->  dialogInterface.dismiss()
-
-                    })
-                .show()
-
+        MaterialAlertDialogBuilder(this)
+            .setTitle("Delete Confirmation")
+            .setMessage("Do you want to delete this product?")
+            .setPositiveButton(
+                "Yes"
+            ) { dialogInterface, i ->
+                deleteProduct()
+            }
+            .setNegativeButton(
+                "No"
+            ) { dialogInterface, i ->
+                dialogInterface.dismiss()
+            }
+            .show()
     }
 
     private fun setUpShareButton() {
-
-            if (areSmsPermissionsGranted(this)) {
-                showSmsBottomSheetDialog()
-            } else {
-                requestPermissions(
-                    smsPermissionsList().toTypedArray(),
-                    SMS_PERMISSIONS_REQUEST_CODE
-                )
-            }
-
+        if (areSmsPermissionsGranted(this)) {
+            showSmsBottomSheetDialog()
+        } else {
+            requestPermissions(
+                smsPermissionsList().toTypedArray(),
+                SMS_PERMISSIONS_REQUEST_CODE
+            )
+        }
     }
 
     private fun setUpMarkAsPurchasedCheckbox() {
         detailViewBinding.cbPurchased.setOnCheckedChangeListener { _, isChecked ->
-            handleCheckChangedForMarkAsPurchased(
-                isChecked
-            )
+            handleCheckChangedForMarkAsPurchased(isChecked)
         }
     }
 
@@ -322,7 +305,6 @@ class DetailViewActivity : AppCompatActivity() {
         val sendSmsButton: MaterialButton? = smsBottomSheetDialog.findViewById(R.id.mb_send_sms)
 
         tilContact?.setEndIconOnClickListener {
-            //TODO open Contact Activity
             val pickContact = Intent(Intent.ACTION_PICK)
             pickContact.setDataAndType(
                 ContactsContract.Contacts.CONTENT_URI,
@@ -333,7 +315,6 @@ class DetailViewActivity : AppCompatActivity() {
 
         sendSmsButton?.setOnClickListener {
             val contact = tieContact?.text.toString()
-            //TODO validation
             if (contact.isBlank()) {
                 tilContact?.error = "Enter Contact"
             } else {
@@ -359,6 +340,7 @@ class DetailViewActivity : AppCompatActivity() {
         }
         return areAllPermissionGranted
     }
+
     private fun smsPermissionsList(): List<String> {
         val smsPermissions: MutableList<String> = ArrayList()
         smsPermissions.add(Manifest.permission.READ_SMS)
@@ -392,10 +374,6 @@ class DetailViewActivity : AppCompatActivity() {
                 }
             }
         }.start()
-
-
-        //If the above SMS manager didn't work
-//        openSmsAppToSendMessage(contact, message)
     }
 
     private fun openSmsAppToSendMessage(contact: String, message: String) {
@@ -420,10 +398,10 @@ class DetailViewActivity : AppCompatActivity() {
                 null,
                 null,
                 null
-            ).use { cursor ->
+            )?.use { cursor ->
                 // Double-check that you
                 // actually got results
-                if (cursor!!.count == 0) return
+                if (cursor.count == 0) return
 
                 // Pull out the first column of
                 // the first row of data
@@ -455,10 +433,12 @@ class DetailViewActivity : AppCompatActivity() {
 
     private fun bindContactPickerActivityForResult() {
         startContactActivityForResult = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()) {
+            ActivityResultContracts.StartActivityForResult()
+        ) {
             if (it != null) {
                 fetchContactNumberFromData(it.data!!)
             }
         }
     }
 }
+

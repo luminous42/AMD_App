@@ -2,6 +2,7 @@ package np.com.luminoussuwal.babybuy.Dashboard
 
 import android.content.ContentValues.TAG
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -13,6 +14,7 @@ import android.widget.ImageView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -85,30 +87,10 @@ class ProfileFragment : Fragment() {
         }
 
         btnLogout.setOnClickListener {
-            auth.signOut()
-            // Navigate to login activity or handle logout as needed
 
-            //Storing login session in SharedPreferences
-            val sharedPreferences = requireActivity()
-                .applicationContext.getSharedPreferences(
-                    "login",
-                    Context.MODE_PRIVATE
-                )
-
-            var sharedPrefEditor = sharedPreferences.edit()
-            sharedPrefEditor.putBoolean("isLoggedIn", false)
-            sharedPrefEditor.apply()
-
-            Snackbar.make(
-                view, "Log Out Successful!",
-                Snackbar.LENGTH_SHORT
-            ).show()
+            setUpLogOutButton()
 
 
-
-            val intent = Intent(requireContext(), LoginActivity::class.java)
-            startActivity(intent)
-            requireActivity().finish()
         }
 
 
@@ -133,10 +115,62 @@ class ProfileFragment : Fragment() {
     }
 
 
-    private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-        uri?.let {profilepic.setImageURI(it)
-            // Optionally, save the image URI to your database or storage
+    private val pickImageLauncher =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let {
+                profilepic.setImageURI(it)
+                // Optionally, save the image URI to your database or storage
+            }
         }
+
+
+    private fun setUpLogOutButton() {
+
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Confirmation")
+            .setMessage("Do you want to logout?")
+            .setPositiveButton(
+                "Yes",
+                DialogInterface.OnClickListener { dialogInterface,
+                                                  i ->
+                    logout()
+                })
+            .setNegativeButton(
+                "No",
+                DialogInterface.OnClickListener { dialogInterface,
+                                                  i ->
+                    dialogInterface.dismiss()
+
+                })
+            .show()
+
     }
 
+    private fun logout() {
+        auth.signOut()
+        // Navigate to login activity or handle logout as needed
+
+        //Storing login session in SharedPreferences
+        val sharedPreferences = requireActivity()
+            .applicationContext.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+            )
+
+        var sharedPrefEditor = sharedPreferences.edit()
+        sharedPrefEditor.putBoolean("isLoggedIn", false)
+        sharedPrefEditor.apply()
+
+        view?.let {
+            Snackbar.make(
+                it, "Log Out Successful!",
+                Snackbar.LENGTH_SHORT
+            ).show()
+        }
+
+
+        val intent = Intent(requireContext(), LoginActivity::class.java)
+        startActivity(intent)
+        requireActivity().finish()
+    }
 }

@@ -10,47 +10,46 @@ import np.com.luminoussuwal.babybuy.databinding.ActivitySplashBinding
 
 class SplashActivity : AppCompatActivity() {
 
-    private lateinit var binding:ActivitySplashBinding
+    private lateinit var binding: ActivitySplashBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         //Binding to Splash Activity XML File
-        binding =ActivitySplashBinding.inflate(layoutInflater)
+        binding = ActivitySplashBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
         //Navigating to Login Activity
-        Handler().postDelayed({
+        Handler().postDelayed(
+            {
 
-        //Check LoggedIn State in SharedPreferences
-        val sharedPreferences =this@SplashActivity.
-        application.getSharedPreferences(
-            "login",
-            Context.MODE_PRIVATE
-            )
+                //Check LoggedIn State in SharedPreferences
+                val sharedPreferences = this@SplashActivity.application.getSharedPreferences(
+                    "login",
+                    Context.MODE_PRIVATE
+                )
 
-        val isLoggedIn = sharedPreferences.getBoolean(
-            "isLoggedIn",
-            false
-        )
+                val isLoggedIn = sharedPreferences.getBoolean(
+                    "isLoggedIn",
+                    false
+                )
 
-        if(isLoggedIn){
-            val intent = Intent(
-                this@SplashActivity,
-                DashboardActivity::class.java
-            )
-            startActivity(intent)
-            finish()
-        }
-        else{
-            val intent = Intent(
-                this@SplashActivity,
-                LoginActivity::class.java
-            )
-            startActivity(intent)
-            finish()
-        }
-        },
+                if (isLoggedIn) {
+                    val intent = Intent(
+                        this@SplashActivity,
+                        DashboardActivity::class.java
+                    )
+                    startActivity(intent)
+                    finish()
+                } else {
+                    val intent = Intent(
+                        this@SplashActivity,
+                        LoginActivity::class.java
+                    )
+                    startActivity(intent)
+                    finish()
+                }
+            },
             500
 
         )

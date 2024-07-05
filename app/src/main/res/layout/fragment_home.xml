@@ -18,17 +18,42 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_home_greetings"
+            <androidx.cardview.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/cv_item"
+                android:background="@drawable/rounded_bottom_corners"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="64dp"
-                android:text="Welcome to BabyBuy!"
+                app:cardElevation="4dp">
+                <TextView
+                    android:id="@+id/tv_home_greetings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_thin"
+                    android:textColor="#1F9EFA"
+                    android:text="Welcome to BabyBuy!"
+                    android:textSize="18sp"
+                    android:layout_marginTop="55dp"
+                    android:layout_marginBottom="20dp"
+                    android:paddingStart="16dp"
+
+                 />
+            <TextView
+                android:id="@+id/tv_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:fontFamily="@font/poppins_thin"
+                android:textColor="#1F9EFA"
+                android:text="Hi, User"
                 android:textSize="18sp"
-                android:padding="16dp"/>
+                android:layout_marginTop="20dp"
+                android:paddingStart="16dp"
+             />
 
 
+            </androidx.cardview.widget.CardView>
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_my_items"
                 android:layout_width="match_parent"
@@ -41,7 +66,19 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins_thin"
-                    android:text="My Items"/>
+                    android:text="My Items"
+
+                    android:textColor="@color/black"/>
+                <TextView
+                android:id="@+id/tv_view_my_items"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins_thin"
+                android:text="View All"
+                app:layout_constraintEnd_toStartOf="@id/ib_items"
+                    app:layout_constraintTop_toTopOf="@id/ib_items"
+                    app:layout_constraintBottom_toBottomOf="@id/ib_items"/>
                 <ImageButton
                     android:id="@+id/ib_items"
                     android:layout_width="wrap_content"
@@ -71,8 +108,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:text="Offers"
+                    android:textColor="@color/black"
+                    android:text="Offered Products"
                     android:fontFamily="@font/poppins_thin"/>
+                <TextView
+                    android:id="@+id/tv_view_my_offers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins_thin"
+                    android:text="View All"
+                    app:layout_constraintEnd_toStartOf="@id/ib_offers"
+                    app:layout_constraintTop_toTopOf="@id/ib_offers"
+                    app:layout_constraintBottom_toBottomOf="@id/ib_offers"/>
                 <ImageButton
                     android:id="@+id/ib_offers"
                     android:layout_width="wrap_content"

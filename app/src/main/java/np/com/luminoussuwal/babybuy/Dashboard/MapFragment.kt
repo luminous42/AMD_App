@@ -37,6 +37,7 @@ class MyMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMyLocationClic
     interface OnLocationSelectedListener {
         fun onLocationSelected(latitude: String, longitude: String)
     }
+
     private var listener: OnLocationSelectedListener? = null
 
     private lateinit var mapsBinding: ActivityMapsBinding
@@ -52,6 +53,7 @@ class MyMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMyLocationClic
             throw RuntimeException("$context must implement OnLocationSelectedListener")
         }
     }
+
     override fun onDetach() {
         super.onDetach()
         listener = null
@@ -80,7 +82,10 @@ class MyMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMyLocationClic
                     "Please add a location marker first. Click on the map to set it"
                 )
             } else {
-                listener?.onLocationSelected((marker?.position?.latitude).toString(),(marker?.position?.longitude).toString())
+                listener?.onLocationSelected(
+                    (marker?.position?.latitude).toString(),
+                    (marker?.position?.longitude).toString()
+                )
                 val intent = Intent()
                 val latitude = (marker?.position?.latitude).toString()
                 val longitude = (marker?.position?.longitude).toString()

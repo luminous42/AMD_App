@@ -31,13 +31,13 @@ class MapsActivity : AppCompatActivity(),
     OnMapReadyCallback,
     GoogleMap.OnMyLocationClickListener,
     GoogleMap.OnMyLocationButtonClickListener,
-    GoogleMap.OnMarkerDragListener
-{
+    GoogleMap.OnMarkerDragListener {
 
     private lateinit var mapsBinding: ActivityMapsBinding
     private var marker: Marker? = null
     private lateinit var googleMap: GoogleMap
     private val fusedLocationProviderClient: FusedLocationProviderClient? = null
+
     companion object {
         const val MAPS_ACTIVITY_SUCCESS_RESULT_CODE = 3014
         const val MAPS_ACTIVITY_FAILURE_RESULT_CODE = 3015

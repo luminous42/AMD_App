@@ -18,9 +18,8 @@ import np.com.luminoussuwal.babybuy.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
     private val TAG = "LoginActivity"
-    private lateinit var binding : ActivityLoginBinding
+    private lateinit var binding: ActivityLoginBinding
     private var isPasswordVisible = false
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -98,7 +97,7 @@ class LoginActivity : AppCompatActivity() {
 
             } else {
 
-                var testData: TestData
+
 
 
                 //local field validation success
@@ -107,7 +106,7 @@ class LoginActivity : AppCompatActivity() {
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             val user = auth.currentUser
-                            testData = TestData("Hello", 123, user.toString())
+
 
 
                             //Storing login session in SharedPreferences
@@ -137,7 +136,7 @@ class LoginActivity : AppCompatActivity() {
                                 DashboardActivity::class.java
                             )
                             intent.putExtra(AppConstants.KEY_EMAIL, email)
-                            intent.putExtra(AppConstants.KEY_TEST_DATA, testData)
+
                             startActivity(intent)
                             finish()
 

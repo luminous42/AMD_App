@@ -1,32 +1,37 @@
 package np.com.luminoussuwal.babybuy.Dashboard.db
 
-import android.app.Application
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
+// Define the database with Room
 @Database(
-    entities =  [Product::class],
-    version = 1
+    entities = [Product::class],  // List of entity classes included in the database
+    version = 1  // Version number of the database
 )
-
-abstract class MainDatabase: RoomDatabase() {
+abstract class MainDatabase : RoomDatabase() {
+    // Abstract function to get the ProductDAO
     abstract fun getProductDao(): ProductDAO
 
+    // Abstract function to get the UserDAO
     abstract fun getUserDao(): UserDAO
 
-    companion object{
+    companion object {
+        // Singleton instance of MainDatabase
         private var INSTANCE: MainDatabase? = null
 
+        // Function to get the singleton instance of the database
         fun getInstance(applicationContext: Context): MainDatabase {
-            if (INSTANCE == null){
+            // If the instance is null, create a new database instance
+            if (INSTANCE == null) {
                 INSTANCE = Room.databaseBuilder(
                     applicationContext,
-                    MainDatabase::class.java, "main_db"
+                    MainDatabase::class.java, "main_db"  // Specify the database name
                 ).build()
             }
 
+            // Return the database instance
             return INSTANCE!!
         }
     }
